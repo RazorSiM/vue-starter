@@ -12,7 +12,9 @@
     "prettier:write": "prettier --write ."
   },
   "dependencies": {
-    "vue": "^3.0.5"
+    "@vueuse/core": "^5.0.3",
+    "vue": "^3.0.5",
+    "vue-router": "^3.5.1"
   },
   "devDependencies": {
     "@arkweid/lefthook": "^0.7.6",
