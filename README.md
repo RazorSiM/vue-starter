@@ -1,27 +1,38 @@
-# Vue 3 + Typescript + Vite
+# Vite Vue3 Typescript Starter
 
-This template should help get you started developing with Vue 3 and Typescript in Vite.
+My Vite starter template for fast prototyping. If you want to try it:
 
-## Recommended IDE Setup
+degit RazorSiM/vite-vue-ts-starter alien
 
-[VSCode](https://code.visualstudio.com/) + [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur). Make sure to enable `vetur.experimental.templateInterpolationService` in settings!
+## Scaffolding
 
-### If Using `<script setup>`
+I've added an example on how you could use a multi layout approach for your project. There's also a "dark mode" toggler example using Tailwind features.
 
-[`<script setup>`](https://github.com/vuejs/rfcs/pull/227) is a feature that is currently in RFC stage. To get proper IDE support for the syntax, use [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) instead of Vetur (and disable Vetur).
+## Packages
 
-## Type Support For `.vue` Imports in TS
+- Windi CSS
+- Vue Router because eventually you'll need it
+- Vueuse because it's super usefull
+- Code Style and Linters
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can use the following:
+I tried to configure everything to work with:
 
-### If Using Volar
+- `Eslint` for linting errors in TS/Vue
+- `Stylelint` for styles
+- `Prettier` for code formatting
+- `LeftHook` and Husky for pre-commit linting. You can extend the hook to do wathever you want.
 
-Run `Volar: Switch TS Plugin on/off` from VSCode command palette.
+## VSCode Integration
 
-### If Using Vetur
+Clone the repo and install the recommended packages. Check the .vscode folder to know more about the settings. By default, when saving it will run Prettier format, Eslint and Stylelint.
 
-1. Install and add `@vuedx/typescript-plugin-vue` to the [plugins section](https://www.typescriptlang.org/tsconfig#plugins) in `tsconfig.json`
-2. Delete `src/shims-vue.d.ts` as it is no longer needed to provide module info to Typescript
-3. Open `src/main.ts` in VSCode
-4. Open the VSCode command palette
-5. Search and run "Select TypeScript version" -> "Use workspace version"
+## How to run it
+
+First of all, install the dependencies: `npm install` or `yarn`.
+Run `npm run dev` or `yarn dev` to start hacking.
+
+In your `./package.json` `Script` section there are some useful commands configured, so check it out.
+
+TODO:
+
+[] Add Vuex or Pinia as store manager
