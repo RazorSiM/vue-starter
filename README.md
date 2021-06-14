@@ -35,4 +35,4 @@ In your `./package.json` `Script` section there are some useful commands configu
 
 TODO:
 
-[ ] Add Vuex or Pinia as store manager
+- [ ] Add Vuex or Pinia as store manager
