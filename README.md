@@ -2,7 +2,7 @@
 
 My Vite starter template for fast prototyping. If you want to try it:
 
-degit RazorSiM/vite-vue-ts-starter alien
+`degit RazorSiM/vite-vue-ts-starter` alien
 
 ## Scaffolding
 
@@ -35,4 +35,4 @@ In your `./package.json` `Script` section there are some useful commands configu
 
 TODO:
 
-[] Add Vuex or Pinia as store manager
+[ ] Add Vuex or Pinia as store manager
