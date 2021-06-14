@@ -1,31 +1,20 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+  <component :is="layout" class="font-nunito">
+    <router-view />
+  </component>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent } from "vue";
-import HelloWorld from "./components/HelloWorld.vue";
-
+import { computed } from "vue";
+import { useRoute } from "vue-router";
 export default defineComponent({
-  name: "App",
-  components: {
-    HelloWorld,
-  },
   setup() {
-    const hello = "";
-    return { hello };
+    const route = useRoute();
+    const layout = computed(() => {
+      return route.meta.layout;
+    });
+    return { layout };
   },
 });
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
