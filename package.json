@@ -7,7 +7,7 @@
     "serve": "vite preview",
     "stylelint-check": "stylelint-config-prettier-check",
     "lint": "eslint --ext .js,.vue src --fix",
-    "lint:style": "stylelint src/**/*.{css,vue}",
+    "lint:style": "stylelint src/**/*.{css,vue} --fix",
     "prettier:check": "prettier --check .",
     "prettier:write": "prettier --write ."
   },
