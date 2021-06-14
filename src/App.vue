@@ -13,7 +13,7 @@ export default defineComponent({
     HelloWorld,
   },
   setup() {
-    const hello: String = "";
+    const hello = "";
     return { hello };
   },
 });
