@@ -11,5 +11,8 @@
     "source.fixAll.stylelint": true
   },
   "eslint.validate": ["typescript", "javascript", "vue"],
-  "stylelint.validate": ["typescript", "javascript", "vue", "css"]
+  "stylelint.validate": ["typescript", "javascript", "vue", "css"],
+  "editor.quickSuggestions": {
+    "strings": true
+  }
 }

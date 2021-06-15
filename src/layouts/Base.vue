@@ -1,38 +1,71 @@
 <template>
   <div
     class="
-      w-full
       min-h-screen
-      text-gray-900
-      transition
-      duration-100
       bg-gray-50
-      dark:bg-gray-900 dark:text-gray-50
+      w-full
+      transition
+      text-gray-900
+      duration-100
+      dark:(bg-gray-900
+      text-gray-50)
     "
   >
-    <div class="flex items-center p-[30px] space-x-5">
-      <div>Imagine this is a great Header</div>
+    <div class="flex space-x-5 p-[30px] items-center justify-end">
       <button
         class="
-          px-3
-          py-2
+          rounded-full
           font-bold
+          bg-yellow-500
+          text-yellow-200
+          hover:(bg-yellow-200
+          text-yellow-500)
           leading-none
+          py-2
+          px-2
           transition
-          bg-pink-500
-          rounded-lg
-          dark:bg-indigo-500
           focus:outline-none
-          dark:hover:bg-indigo-900
-          hover:bg-pink-900
+          dark:(bg-indigo-200
+          text-indigo-900)
+          dark:hover:(bg-indigo-900
+          text-indigo-200)
         "
         @click="toggleDark"
       >
-        If you click here you toggle the dark mode
+        <svg
+          v-if="!isDark"
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+          />
+        </svg>
+        <svg
+          v-else
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+          />
+        </svg>
       </button>
     </div>
 
-    <div class="container p-10 mx-auto">
+    <div class="container mx-auto p-10">
       <slot />
     </div>
   </div>
@@ -48,7 +81,7 @@ export default defineComponent({
   setup() {
     const isDark = useDark();
     const toggleDark = useToggle(isDark);
-    return { toggleDark };
+    return { toggleDark, isDark };
   },
 });
 </script>

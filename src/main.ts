@@ -1,11 +1,12 @@
-import { createApp } from "vue";
+import "virtual:windi.css";
+import "/@/assets/style.css";
+
 import App from "./App.vue";
 import BaseLayout from "./layouts/Base.vue";
 import EmptyLayout from "./layouts/Empty.vue";
-import router from "/@/router";
+import { createApp } from "vue";
 import { pinia } from "./stores";
-
-import "virtual:windi.css";
+import router from "/@/router";
 
 const app = createApp(App);
 app.use(router);
