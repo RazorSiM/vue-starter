@@ -29,18 +29,20 @@
     Counter value is
     <span class="font-bold" :class="counterColor">{{ counter }}</span>
   </div>
-  <button
-    class="border border-green-500 rounded-md px-3 py-1 mr-5"
-    @click="increment()"
-  >
-    Increment Counter by 1
-  </button>
-  <button
-    class="border border-red-500 rounded-md px-3 py-1"
-    @click="decrease()"
-  >
-    Decrease Counter by 1
-  </button>
+  <div class="flex space-x-5">
+    <button
+      class="border border-red-500 rounded-md px-3 py-1"
+      @click="decrease()"
+    >
+      Decrease Counter by 1
+    </button>
+    <button
+      class="border border-green-500 rounded-md px-3 py-1"
+      @click="increment()"
+    >
+      Increment Counter by 1
+    </button>
+  </div>
 </template>
 <script lang="ts">
 import { defineComponent, computed } from "vue";
