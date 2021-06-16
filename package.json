@@ -1,5 +1,13 @@
 {
-  "version": "0.0.0",
+  "name": "vite-vue-ts-starter",
+  "description": "A starter template for Vue3 running on Vite and Typescript.",
+  "homepage": "https://github.com/RazorSiM/vite-vue-ts-starter",
+  "author": {
+    "name": "Simone 'Raz' Colabufalo",
+    "email": "me@raz.works",
+    "url": "https://github.com/RazorSiM"
+  },
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "dev": "vite",
