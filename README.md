@@ -12,6 +12,7 @@ I've added an example on how you could use a multi layout approach for your proj
 
 - Windi CSS
 - Vue Router because eventually you'll need it
+- Pinia as a composable store
 - Vueuse because it's super usefull
 - Code Style and Linters
 
@@ -35,4 +36,4 @@ In your `./package.json` `Script` section there are some useful commands configu
 
 TODO:
 
-- [ ] Add Vuex or Pinia as store manager
+- [x] Add Vuex or Pinia as store manager
