@@ -4,13 +4,15 @@
 
   // List of extensions which should be recommended for users of this workspace.
   "recommendations": [
+    "antfu.vite",
+    "lokalise.i18n-ally",
+    "antfu.iconify",
     "wix.vscode-import-cost",
     "voorjaar.windicss-intellisense",
     "stylelint.vscode-stylelint",
     "octref.vetur",
     "naumovs.color-highlight",
     "formulahendry.auto-rename-tag",
-    "formulahendry.auto-close-tag",
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
     "CoenraadS.bracket-pair-colorizer-2"
