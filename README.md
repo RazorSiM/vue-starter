@@ -2,7 +2,9 @@
 
 My Vite starter template for fast prototyping. If you want to try it:
 
-`degit RazorSiM/vite-vue-ts-starter` alien
+`degit RazorSiM/vite-vue-ts-starter` 👽
+
+`pnpm install`
 
 ## Scaffolding
 
@@ -14,7 +16,10 @@ I've added an example on how you could use a multi layout approach for your proj
 - Vue Router because eventually you'll need it
 - Pinia as a composable store
 - Vueuse because it's super usefull
-- Code Style and Linters
+- Typescript, Code Style and Linters:
+  - _eslint_ and _typescript-eslint_ **only** for linting and Typescript support. No formatting style crap;
+  - _stylelyng_ used to check css styles;
+  - _prettier_ is used to format the code. Much more faster than using prettier through eslint;
 
 I tried to configure everything to work with:
 
@@ -29,8 +34,8 @@ Clone the repo and install the recommended packages. Check the .vscode folder to
 
 ## How to run it
 
-First of all, install the dependencies: `npm install` or `yarn`.
-Run `npm run dev` or `yarn dev` to start hacking.
+First of all, install the dependencies: `npm install` or `yarn` or my latest preference: `pnpm install`.
+Run `npm run dev` or `yarn dev` or `pnpm run dev` to start hacking.
 
 In your `./package.json` `Script` section there are some useful commands configured, so check it out.
 

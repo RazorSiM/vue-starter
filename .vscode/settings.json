@@ -10,8 +10,8 @@
     "source.fixAll.eslint": true,
     "source.fixAll.stylelint": true
   },
-  "eslint.validate": ["typescript", "javascript", "vue"],
-  "stylelint.validate": ["typescript", "javascript", "vue", "css"],
+  // "eslint.validate": ["typescript", "javascript", "vue"],
+  // "stylelint.validate": ["typescript", "javascript", "vue", "vue-html", "css"],
   "editor.quickSuggestions": {
     "strings": true
   }
