@@ -12,7 +12,6 @@
     "stylelint.vscode-stylelint",
     "octref.vetur",
     "naumovs.color-highlight",
-    "formulahendry.auto-rename-tag",
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
     "CoenraadS.bracket-pair-colorizer-2"
