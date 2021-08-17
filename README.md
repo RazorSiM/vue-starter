@@ -9,6 +9,7 @@ My Vite starter template for fast prototyping. If you want to try it:
 ## Scaffolding
 
 I've added an example on how you could use a multi layout approach for your project. There's also a "dark mode" toggler example using Tailwind features.
+The project has the `refSugar` enabled by default, so you can use `$ref` and `$computed` inside your components. Remember to declare $ref and $computed as `variables` and not `constants`.
 
 ## Packages
 
@@ -42,3 +43,4 @@ In your `./package.json` `Script` section there are some useful commands configu
 TODO:
 
 - [x] Add Vuex or Pinia as store manager
+- [] Optimize stylelint
