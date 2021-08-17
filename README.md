@@ -43,4 +43,4 @@ In your `./package.json` `Script` section there are some useful commands configu
 TODO:
 
 - [x] Add Vuex or Pinia as store manager
-- [] Optimize stylelint
+- [ ] Optimize stylelint
