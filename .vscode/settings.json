@@ -14,5 +14,6 @@
   // "stylelint.validate": ["typescript", "javascript", "vue", "vue-html", "css"],
   "editor.quickSuggestions": {
     "strings": true
-  }
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
