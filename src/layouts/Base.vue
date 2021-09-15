@@ -72,17 +72,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import { useDark, useToggle } from "@vueuse/core";
 export default defineComponent({
   component: {
     name: "BaseLayout",
   },
-  setup() {
-    const isDark = useDark();
-    const toggleDark = useToggle(isDark);
-
-    return { toggleDark, isDark };
-  },
 });
+</script>
+<script setup lang="ts">
+const isDark = useDark();
+const toggleDark = useToggle(isDark);
 </script>
