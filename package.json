@@ -28,7 +28,7 @@
   "devDependencies": {
     "@arkweid/lefthook": "^0.7.6",
     "@iconify/json": "^1.1.408",
-    "@types/node": "^16.10.2",
+    "@types/node": "^17.0.4",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.1.0",
     "@vitejs/plugin-vue": "^1.9.2",
