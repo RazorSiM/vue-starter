@@ -1,10 +1,6 @@
-# Vite Vue3 Typescript Starter
+This is my friend [RazorSIM's](https://github.com/RazorSiM) beautiful [starter](https://github.com/RazorSiM/vite-vue-ts-starter).
 
-My Vite starter template for fast prototyping. If you want to try it:
-
-`degit RazorSiM/vite-vue-ts-starter` 👽
-
-`pnpm install`
+I forked the project to be able to test my skills and see how long it takes before I screw it up!
 
 ## Scaffolding
 
@@ -39,8 +35,3 @@ First of all, install the dependencies: `npm install` or `yarn` or my latest pre
 Run `npm run dev` or `yarn dev` or `pnpm run dev` to start hacking.
 
 In your `./package.json` `Script` section there are some useful commands configured, so check it out.
-
-TODO:
-
-- [x] Add Vuex or Pinia as store manager
-- [ ] Optimize stylelint
