@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "target": "ESNext",
-    "module": "ESNext",
-    "lib": ["ESNext", "DOM"],
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["esnext", "dom"],
     "strict": true,
     "esModuleInterop": true,
     "incremental": false,
@@ -19,5 +19,5 @@
     },
     "jsx": "preserve"
   },
-  "exclude": ["dist", "node_modules"]
+  "include": ["vite.config.*", "src/**/*", "src/**/*.vue"]
 }
