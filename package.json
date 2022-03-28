@@ -20,7 +20,7 @@
     "prettier:write": "prettier --write ."
   },
   "dependencies": {
-    "@vueuse/core": "^7.5.5",
+    "@vueuse/core": "^8.2.0",
     "pinia": "^2.0.9",
     "vue": "^3.2.27",
     "vue-router": "^4.0.12"
