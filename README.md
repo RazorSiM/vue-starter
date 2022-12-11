@@ -1,46 +1,68 @@
-# Vite Vue3 Typescript Starter
+# starter-v2
 
-My Vite starter template for fast prototyping. If you want to try it:
+This template should help get you started developing with Vue 3 in Vite.
 
-`degit RazorSiM/vite-vue-ts-starter` 👽
+## Recommended IDE Setup
 
-`pnpm install`
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-## Scaffolding
+## Type Support for `.vue` Imports in TS
 
-I've added an example on how you could use a multi layout approach for your project. There's also a "dark mode" toggler example using Tailwind features.
-The project has the `refSugar` enabled by default, so you can use `$ref` and `$computed` inside your components. Remember to declare $ref and $computed as `variables` and not `constants`.
+TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
 
-## Packages
+If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
 
-- Windi CSS
-- Vue Router because eventually you'll need it
-- Pinia as a composable store
-- Vueuse because it's super usefull
-- Typescript, Code Style and Linters:
-  - _eslint_ and _typescript-eslint_ **only** for linting and Typescript support. No formatting style crap;
-  - _stylelyng_ used to check css styles;
-  - _prettier_ is used to format the code. Much more faster than using prettier through eslint;
+1. Disable the built-in TypeScript Extension
+    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
+    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
+2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
 
-I tried to configure everything to work with:
+## Customize configuration
 
-- `Eslint` for linting errors in TS/Vue
-- `Stylelint` for styles
-- `Prettier` for code formatting
-- `LeftHook` and Husky for pre-commit linting. You can extend the hook to do wathever you want.
+See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-## VSCode Integration
+## Project Setup
 
-Clone the repo and install the recommended packages. Check the .vscode folder to know more about the settings. By default, when saving it will run Prettier format, Eslint and Stylelint.
+```sh
+npm install
+```
 
-## How to run it
+### Compile and Hot-Reload for Development
 
-First of all, install the dependencies: `npm install` or `yarn` or my latest preference: `pnpm install`.
-Run `npm run dev` or `yarn dev` or `pnpm run dev` to start hacking.
+```sh
+npm run dev
+```
 
-In your `./package.json` `Script` section there are some useful commands configured, so check it out.
+### Type-Check, Compile and Minify for Production
 
-TODO:
+```sh
+npm run build
+```
 
-- [x] Add Vuex or Pinia as store manager
-- [ ] Optimize stylelint
+### Run Unit Tests with [Vitest](https://vitest.dev/)
+
+```sh
+npm run test:unit
+```
+
+### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
+
+```sh
+npm run test:e2e:dev
+```
+
+This runs the end-to-end tests against the Vite development server.
+It is much faster than the production build.
+
+But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
+
+```sh
+npm run build
+npm run test:e2e
+```
+
+### Lint with [ESLint](https://eslint.org/)
+
+```sh
+npm run lint
+```

@@ -15,11 +15,5 @@ pre-commit:
   parallel: true
   commands:
     eslint:
-      glob: "*.{js,ts,vue}"
-      run: pnpm eslint --fix {staged_files}
-    stylelint:
-      glob: "*.{vue,css}"
-      run: pnpm stylelint --fix {staged_files}
-    prettier:
-      glob: "*.{js,ts,vue,css,json,yml}"
-      run: pnpm prettier --write {staged_files}
+      glob: '*.{js,ts,vue}'
+      run: npx eslint --fix {staged_files}

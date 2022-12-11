@@ -1,32 +1,49 @@
-import AutoImport from "unplugin-auto-import/vite";
-import Components from "unplugin-vue-components/vite";
-import Icons from "unplugin-icons/vite";
-import IconsResolver from "unplugin-icons/resolver";
-import Vue from "@vitejs/plugin-vue";
-import WindiCSS from "vite-plugin-windicss";
-import { defineConfig } from "vite";
-import path from "path";
+import { URL, fileURLToPath } from 'node:url'
+import { defineConfig } from 'vite'
+import AutoImport from 'unplugin-auto-import/vite'
+import Unocss from 'unocss/vite'
+import VueMacros from 'unplugin-vue-macros/vite'
+import Components from 'unplugin-vue-components/vite'
+import Vue from '@vitejs/plugin-vue'
+import VueJsx from '@vitejs/plugin-vue-jsx'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  resolve: {
-    alias: {
-      "~/": `${path.resolve(__dirname, "src")}/`,
-    },
-  },
   plugins: [
-    Vue({
-      reactivityTransform: true,
+    VueMacros({
+      plugins: {
+        vue: Vue(),
+        vueJsx: VueJsx(),
+      },
     }),
     AutoImport({
-      imports: ["vue", "vue-router", "@vueuse/core"],
+      include: [
+        /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
+        /\.vue$/, /\.vue\?vue/, // .vue
+        /\.md$/, // .md
+      ],
+      imports: [
+        'vue',
+        'vue-router',
+        '@vueuse/core',
+      ],
       dts: true,
+      eslintrc: {
+        enabled: true,
+      },
     }),
     Components({
-      resolvers: [IconsResolver({ prefix: "icon" })],
       dts: true,
+      types: [{
+        from: 'vue-router',
+        names: ['RouterLink', 'RouterView'],
+      }],
     }),
-    Icons(),
-    WindiCSS(),
+    Unocss(),
   ],
-});
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
+})

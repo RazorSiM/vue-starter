@@ -1,31 +1,36 @@
-import { defineStore } from "pinia";
+import { ref } from 'vue'
+import { defineStore } from 'pinia'
 
-export const useGlobalStore = defineStore({
-  id: "global",
-  state: () => ({
-    loading: false,
-    counter: 0,
-  }),
-  actions: {
-    incrementCounter(): void {
-      this.counter++;
-    },
-    decreaseCounter(): void {
-      this.counter--;
-    },
-    async runWithLoader(
-      callback: (...args: unknown[]) => Promise<boolean>,
-      errorMessage: string
-    ): Promise<boolean> {
-      try {
-        this.loading = true;
-        await callback();
-        this.loading = false;
-        return true;
-      } catch (error) {
-        this.loading = false;
-        throw new Error(errorMessage);
-      }
-    },
-  },
-});
+export const useGlobalStore = defineStore('global', () => {
+  const count = ref(0)
+  const globalLoader = ref(false)
+  const globalError = ref({ status: false, message: '' })
+
+  const incrementCounter = () => {
+    count.value++
+  }
+  const decreaseCounter = () => {
+    count.value--
+  }
+  const runGlobalAsync = async (callback: (...args: unknown[]) => Promise<boolean>,
+    errorMessage: string) => {
+    try {
+      globalLoader.value = true
+      await callback()
+    }
+    catch (error) {
+      globalError.value = { status: true, message: errorMessage }
+    }
+    finally {
+      globalLoader.value = false
+    }
+  }
+  return {
+    count,
+    globalLoader,
+    globalError,
+    incrementCounter,
+    decreaseCounter,
+    runGlobalAsync,
+  }
+})
