@@ -1,6 +1,51 @@
-# starter-v2
 
-This template should help get you started developing with Vue 3 in Vite.
+[![Vite](https://img.shields.io/badge/-Vite-646cff?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Vue](https://img.shields.io/badge/-Vue-42b883?style=flat-square&logo=vue.js&logoColor=white)](https://v3.vuejs.org/)
+[![TypeScript](https://img.shields.io/badge/-TypeScript-007acc?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![PNPM](https://img.shields.io/badge/-PNPM-ff5c93?style=flat-square&logo=pnpm&logoColor=white)](https://pnpm.io/)
+[![Volar](https://img.shields.io/badge/-Volar-42b883?style=flat-square&logo=vue.js&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+[![Vitest](https://img.shields.io/badge/-Vitest-42b883?style=flat-square&logo=vue.js&logoColor=white)](https://vitest.dev/)
+[![Cypress](https://img.shields.io/badge/-Cypress-17202c?style=flat-square&logo=cypress&logoColor=white)](https://www.cypress.io/)
+[![ESLint](https://img.shields.io/badge/-ESLint-4b32c3?style=flat-square&logo=eslint&logoColor=white)](https://eslint.org/)
+[![Antfu](https://img.shields.io/badge/-Antfu-42b883?style=flat-square&logo=vue.js&logoColor=white)](https://github.com/antfu)
+
+# Vue 3 Starter
+
+This is my personal take on a Vite + Vue 3 template. If you want to try it:
+```sh
+degit RazorSiM/vite-vue-ts-starter
+pnpm install
+```
+
+## What's included
+Here's a list of what's included in this template. Everything has been configured to work out of the box with Eslint, Typescript and VScode.
+
+### Features
+- [Vue3](https://vuejs.org);
+- [Vue Router](https://router.vuejs.org/) to handle routes;
+- [Pinia](https://pinia.vuejs.org/) for state management;
+- [Vueuse](https://vueuse.org/) for useful composition API utilities;
+- UnoCSS for fast and super customizable styling configured with:
+    - [@unocss/reset](https://github.com/unocss/unocss#style-resetting) with Tailwind settings;
+    - [@unocss/preset-uno](https://github.com/unocss/unocss/tree/main/packages/preset-uno) as a base preset;
+    - [@unocss/preset-icons](https://github.com/unocss/unocss/tree/main/packages/preset-icons) to use icons from [Icones](https://icones.js.org/);
+    - [@unocss/preset-web-fonts](https://github.com/unocss/unocss/tree/main/packages/preset-typography) so you can grab your web fonts and set them up easily;
+    - [@unocss/transformer-variant-group](https://github.com/unocss/unocss/tree/main/packages/transformer-variant-group) to use the `group` variant; ex: `hover:(bg-blue-500 text-white font-bold)`;
+- Scaffolded an example on how you could implement a multi-layout approach
+
+### Development Experience
+- [Vite](https://vitejs.dev/) for development and production builds;
+- Typescript support for `.vue` files;
+- [Eslint](https://eslint.org/) with [antfu/eslint-config](https://github.com/antfu/eslint-config) for linting and formatting;
+- [Lefthook](https://github.com/evilmartians/lefthook) for ez git(gud) hooks;
+- [Unplugin Auto Import](https://github.com/antfu/unplugin-auto-import) to automatically import stuff in your files; No more `import { defineComponent } from 'vue'`;
+- [Unplugin Vue Components](https://github.com/antfu/unplugin-vue-components) to automatically import components;
+- [Unplugin Vue Macros](https://github.com/sxzz/unplugin-vue-macros) to extend Vue macros and syntax sugar;
+- Vscode will fix and format on save with Eslint;
+
+### Testing
+- [Vitest](https://vitest.dev/) for unit testing;
+- [Cypress](https://www.cypress.io/) for e2e testing;
 
 ## Recommended IDE Setup
 
@@ -24,31 +69,31 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 ## Project Setup
 
 ```sh
-npm install
+pnpm install
 ```
 
 ### Compile and Hot-Reload for Development
 
 ```sh
-npm run dev
+pnpm run dev
 ```
 
 ### Type-Check, Compile and Minify for Production
 
 ```sh
-npm run build
+pnpm run build
 ```
 
 ### Run Unit Tests with [Vitest](https://vitest.dev/)
 
 ```sh
-npm run test:unit
+pnpm run test:unit
 ```
 
 ### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
 
 ```sh
-npm run test:e2e:dev
+pnpm run test:e2e:dev
 ```
 
 This runs the end-to-end tests against the Vite development server.
@@ -57,12 +102,13 @@ It is much faster than the production build.
 But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
 
 ```sh
-npm run build
-npm run test:e2e
+pnpm run build
+pnpm run test:e2e
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+### Lint, fix and format with [ESLint](https://eslint.org/) and @antfu/eslint-config settings
 
 ```sh
-npm run lint
+pnpm run lint
 ```
+
