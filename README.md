@@ -7,7 +7,7 @@
 [![Vitest](https://img.shields.io/badge/-Vitest-42b883?style=flat-square&logo=vue.js&logoColor=white)](https://vitest.dev/)
 [![Cypress](https://img.shields.io/badge/-Cypress-17202c?style=flat-square&logo=cypress&logoColor=white)](https://www.cypress.io/)
 [![ESLint](https://img.shields.io/badge/-ESLint-4b32c3?style=flat-square&logo=eslint&logoColor=white)](https://eslint.org/)
-[![Antfu](https://img.shields.io/badge/-Antfu-42b883?style=flat-square&logo=vue.js&logoColor=white)](https://github.com/antfu)
+[![Antfu](https://img.shields.io/badge/-Antfu-42b883?style=flat-square&logo=vue.js&logoColor=white)](https://github.com/antfu/eslint-config)
 
 # Vue 3 Starter
 

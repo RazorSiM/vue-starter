@@ -11,7 +11,7 @@ const toggleDark = useToggle(isDark)
     class="min-h-screen bg-gray-50 w-full transition text-gray-900 duration-100 dark:(bg-gray-900 text-gray-50) font-sans
     "
   >
-    <header class="flex gap-5 p-[30px] items-center justify-between">
+    <header class="flex gap-5 p-[30px] items-center justify-between container mx-auto">
       <TopNav />
       <button
         class="rounded-full font-bold hover:(bg-yellow-200) leading-none py-2 px-2 transition focus:outline-none  hover:dark:(bg-indigo-900)
