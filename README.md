@@ -13,7 +13,7 @@
 
 This is my personal take on a Vite + Vue 3 template. If you want to try it:
 ```sh
-degit RazorSiM/vite-vue-ts-starter
+degit RazorSiM/vue-starter
 pnpm install
 ```
 
