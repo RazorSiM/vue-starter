@@ -1,4 +1,3 @@
-
 [![Vite](https://img.shields.io/badge/-Vite-646cff?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Vue](https://img.shields.io/badge/-Vue-42b883?style=flat-square&logo=vue.js&logoColor=white)](https://v3.vuejs.org/)
 [![TypeScript](https://img.shields.io/badge/-TypeScript-007acc?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -12,28 +11,32 @@
 # Vue 3 Starter
 
 This is my personal take on a Vite + Vue 3 template. If you want to try it:
+
 ```sh
 degit RazorSiM/vue-starter
 pnpm install
 ```
 
 ## What's included
+
 Here's a list of what's included in this template. Everything has been configured to work out of the box with Eslint, Typescript and VScode.
 
 ### Features
+
 - [Vue3](https://vuejs.org);
 - [Vue Router](https://router.vuejs.org/) to handle routes;
 - [Pinia](https://pinia.vuejs.org/) for state management;
 - [Vueuse](https://vueuse.org/) for useful composition API utilities;
 - UnoCSS for fast and super customizable styling configured with:
-    - [@unocss/reset](https://github.com/unocss/unocss#style-resetting) with Tailwind settings;
-    - [@unocss/preset-uno](https://github.com/unocss/unocss/tree/main/packages/preset-uno) as a base preset;
-    - [@unocss/preset-icons](https://github.com/unocss/unocss/tree/main/packages/preset-icons) to use icons from [Icones](https://icones.js.org/);
-    - [@unocss/preset-web-fonts](https://github.com/unocss/unocss/tree/main/packages/preset-typography) so you can grab your web fonts and set them up easily;
-    - [@unocss/transformer-variant-group](https://github.com/unocss/unocss/tree/main/packages/transformer-variant-group) to use the `group` variant; ex: `hover:(bg-blue-500 text-white font-bold)`;
+  - [@unocss/reset](https://github.com/unocss/unocss#style-resetting) with Tailwind settings;
+  - [@unocss/preset-uno](https://github.com/unocss/unocss/tree/main/packages/preset-uno) as a base preset;
+  - [@unocss/preset-icons](https://github.com/unocss/unocss/tree/main/packages/preset-icons) to use icons from [Icones](https://icones.js.org/);
+  - [@unocss/preset-web-fonts](https://github.com/unocss/unocss/tree/main/packages/preset-typography) so you can grab your web fonts and set them up easily;
+  - [@unocss/transformer-variant-group](https://github.com/unocss/unocss/tree/main/packages/transformer-variant-group) to use the `group` variant; ex: `hover:(bg-blue-500 text-white font-bold)`;
 - Scaffolded an example on how you could implement a multi-layout approach
 
 ### Development Experience
+
 - [Vite](https://vitejs.dev/) for development and production builds;
 - Typescript support for `.vue` files;
 - [Eslint](https://eslint.org/) with [antfu/eslint-config](https://github.com/antfu/eslint-config) for linting and formatting;
@@ -44,6 +47,7 @@ Here's a list of what's included in this template. Everything has been configure
 - Vscode will fix and format on save with Eslint;
 
 ### Testing
+
 - [Vitest](https://vitest.dev/) for unit testing;
 - [Cypress](https://www.cypress.io/) for e2e testing;
 
@@ -58,8 +62,8 @@ TypeScript cannot handle type information for `.vue` imports by default, so we r
 If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
 
 1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
+   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
+   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
 2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
 
 ## Customize configuration
@@ -111,4 +115,3 @@ pnpm run test:e2e
 ```sh
 pnpm run lint
 ```
-

@@ -1,20 +1,21 @@
-import { defineConfig } from 'unocss'
-import presetUno from '@unocss/preset-uno'
-import presetIcons from '@unocss/preset-icons'
-import presetWebFonts from '@unocss/preset-web-fonts'
-import transformerVariantGroup from '@unocss/transformer-variant-group'
-import presetTypography from '@unocss/preset-typography'
+import {
+  defineConfig,
+  presetIcons,
+  presetTypography,
+  presetUno,
+  presetWebFonts,
+  transformerVariantGroup,
+} from "unocss";
+
 export default defineConfig({
   presets: [
     presetUno(),
     presetIcons(),
     presetWebFonts({
-      provider: 'google',
-      fonts: { sans: 'Roboto', mono: 'Fira Code' },
+      provider: "google",
+      fonts: { sans: "Roboto", mono: "Fira Code" },
     }),
     presetTypography(),
   ],
-  transformers: [
-    transformerVariantGroup(),
-  ],
-})
+  transformers: [transformerVariantGroup()],
+});

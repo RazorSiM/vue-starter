@@ -15,5 +15,5 @@ pre-commit:
   parallel: true
   commands:
     eslint:
-      glob: '*.{js,ts,vue}'
+      glob: "*.{js,ts,vue}"
       run: npx eslint --fix {staged_files}

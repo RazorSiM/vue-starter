@@ -1,22 +1,23 @@
 /* eslint-env node */
+require("@rushstack/eslint-patch/modern-module-resolution");
+
 module.exports = {
   root: true,
   extends: [
-    '@antfu',
-    './.eslintrc-auto-import.json',
+    "plugin:vue/vue3-recommended",
+    "eslint:recommended",
+    "@vue/eslint-config-typescript",
+    "@vue/eslint-config-prettier",
+    "./.eslintrc-auto-import.json",
   ],
-  globals: { defineOptions: 'writable' },
+  globals: { defineOptions: "writable" },
   overrides: [
     {
-      files: [
-        'cypress/e2e/**/*.{cy,spec}.{js,ts,jsx,tsx}',
-      ],
-      extends: [
-        'plugin:cypress/recommended',
-      ],
+      files: ["cypress/e2e/**/*.{cy,spec}.{js,ts,jsx,tsx}"],
+      extends: ["plugin:cypress/recommended"],
     },
   ],
   parserOptions: {
-    ecmaVersion: 'latest',
+    ecmaVersion: "latest",
   },
-}
+};
