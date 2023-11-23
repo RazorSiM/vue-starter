@@ -33,7 +33,7 @@ Here's a list of what's included in this template. Everything has been configure
   - [@unocss/preset-icons](https://github.com/unocss/unocss/tree/main/packages/preset-icons) to use icons from [Icones](https://icones.js.org/);
   - [@unocss/preset-web-fonts](https://github.com/unocss/unocss/tree/main/packages/preset-typography) so you can grab your web fonts and set them up easily;
   - [@unocss/transformer-variant-group](https://github.com/unocss/unocss/tree/main/packages/transformer-variant-group) to use the `group` variant; ex: `hover:(bg-blue-500 text-white font-bold)`;
-- Scaffolded an example on how you could implement a multi-layout approach
+- Scaffolded an example of how you could implement a multi-layout approach
 
 ### Development Experience
 
@@ -113,5 +113,6 @@ pnpm run test:e2e
 ### Lint, fix and format with [ESLint](https://eslint.org/) and @antfu/eslint-config settings
 
 ```sh
-pnpm run lint
+pnpm run lint # will only check
+pnpm run lint:fix # will fix and format
 ```
