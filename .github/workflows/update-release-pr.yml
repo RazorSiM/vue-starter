@@ -20,6 +20,12 @@ jobs:
         with:
           node-version-file: .nvmrc
 
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install PNPM
+        run: corepack prepare pnpm@latest --activate
+
       - name: Install Dependencies
         run: pnpm install
 
