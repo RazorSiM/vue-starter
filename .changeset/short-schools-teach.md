@@ -1,5 +1,5 @@
 ---
-"vue-starter": major
+"@razorsim/vue-starter": major
 ---
 
 Update dependencies and configurations:
