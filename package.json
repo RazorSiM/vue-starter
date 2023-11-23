@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.1.0",
+    "@changesets/changelog-github": "^0.4.8",
     "@changesets/cli": "^2.26.2",
     "@iconify/json": "^2.2.145",
     "@tsconfig/node18": "^18.2.2",
