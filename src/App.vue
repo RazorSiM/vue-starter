@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-const route = useRoute();
+const route = useRoute()
 const layout = computed(() => {
-  return route.meta.layout || "DefaultLayout";
-});
+  return route.meta.layout || 'DefaultLayout'
+})
 </script>
 
 <template>

@@ -1,11 +1,11 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from 'vitest'
 
-import { mount } from "@vue/test-utils";
-import BaseButton from "../BaseButton.vue";
+import { mount } from '@vue/test-utils'
+import BaseButton from '../BaseButton.vue'
 
-describe("BaseButton", () => {
-  it("renders properly", () => {
-    const wrapper = mount(BaseButton, { props: { label: "Hello Vitest" } });
-    expect(wrapper.text()).toContain("Hello Vitest");
-  });
-});
+describe('baseButton', () => {
+  it('renders properly', () => {
+    const wrapper = mount(BaseButton, { props: { label: 'Hello Vitest' } })
+    expect(wrapper.text()).toContain('Hello Vitest')
+  })
+})

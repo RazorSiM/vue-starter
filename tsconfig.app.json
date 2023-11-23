@@ -1,13 +1,5 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": [
-    "env.d.ts",
-    "src/**/*",
-    "src/**/*.vue",
-    "auto-imports.d.ts",
-    "components.d.ts"
-  ],
-  "exclude": ["src/**/__tests__/*"],
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
   "compilerOptions": {
     "composite": true,
     "baseUrl": ".",
@@ -15,5 +7,7 @@
       "@/*": ["./src/*"]
     },
     "types": []
-  }
+  },
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "auto-imports.d.ts", "components.d.ts"],
+  "exclude": ["src/**/__tests__/*"]
 }

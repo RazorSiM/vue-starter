@@ -5,17 +5,17 @@ import {
   presetUno,
   presetWebFonts,
   transformerVariantGroup,
-} from "unocss";
+} from 'unocss'
 
 export default defineConfig({
   presets: [
     presetUno(),
     presetIcons(),
     presetWebFonts({
-      provider: "google",
-      fonts: { sans: "Roboto", mono: "Fira Code" },
+      provider: 'google',
+      fonts: { sans: 'Roboto', mono: 'Fira Code' },
     }),
     presetTypography(),
   ],
   transformers: [transformerVariantGroup()],
-});
+})
