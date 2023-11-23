@@ -1,5 +1,11 @@
 # @razorsim/vue-starter
 
+## 2.0.1
+
+### Patch Changes
+
+- [#124](https://github.com/RazorSiM/vue-starter/pull/124) [`c832dd9`](https://github.com/RazorSiM/vue-starter/commit/c832dd970f771caff92b3f9b9474acad215b8676) Thanks [@RazorSiM](https://github.com/RazorSiM)! - Fix naming in workflow steps
+
 ## 2.0.0
 
 ### Major Changes
