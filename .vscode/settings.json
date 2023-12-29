@@ -27,5 +27,18 @@
 
   // Enable eslint for all supported languages
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "html", "markdown", "json", "jsonc", "yaml"],
-  "cSpell.words": ["antfu", "iconify", "pinia", "unocss", "unplugin", "vueuse"]
+  "cSpell.words": [
+    "antfu",
+    "antfueslint",
+    "degit",
+    "Icones",
+    "iconify",
+    "pinia",
+    "unocss",
+    "unplugin",
+    "Vetur",
+    "Vite",
+    "Vitest",
+    "vueuse"
+  ]
 }

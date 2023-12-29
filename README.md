@@ -1,16 +1,36 @@
-[![Vite](https://img.shields.io/badge/-Vite-646cff?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
-[![Vue](https://img.shields.io/badge/-Vue-42b883?style=flat-square&logo=vue.js&logoColor=white)](https://v3.vuejs.org/)
-[![TypeScript](https://img.shields.io/badge/-TypeScript-007acc?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![PNPM](https://img.shields.io/badge/-PNPM-ff5c93?style=flat-square&logo=pnpm&logoColor=white)](https://pnpm.io/)
-[![Volar](https://img.shields.io/badge/-Volar-42b883?style=flat-square&logo=vue.js&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
-[![Vitest](https://img.shields.io/badge/-Vitest-42b883?style=flat-square&logo=vue.js&logoColor=white)](https://vitest.dev/)
-[![Cypress](https://img.shields.io/badge/-Cypress-17202c?style=flat-square&logo=cypress&logoColor=white)](https://www.cypress.io/)
-[![ESLint](https://img.shields.io/badge/-ESLint-4b32c3?style=flat-square&logo=eslint&logoColor=white)](https://eslint.org/)
-[![Antfu](https://img.shields.io/badge/-Antfu-42b883?style=flat-square&logo=vue.js&logoColor=white)](https://github.com/antfu/eslint-config)
+<div style="display: flex; gap: 0.2rem">
+  <a href="https://vitejs.dev/">
+    <img src="https://img.shields.io/badge/-Vite-646cff?style=flat-square&amp;logo=vite&amp;logoColor=white" alt="Vite">
+  </a>
+  <a href="https://v3.vuejs.org/">
+    <img src="https://img.shields.io/badge/-Vue-42b883?style=flat-square&amp;logo=vue.js&amp;logoColor=white" alt="Vue">
+  </a>
+  <a href="https://www.typescriptlang.org/">
+    <img src="https://img.shields.io/badge/-TypeScript-007acc?style=flat-square&amp;logo=typescript&amp;logoColor=white" alt="TypeScript">
+  </a>
+  <a href="https://pnpm.io/">
+    <img src="https://img.shields.io/badge/-PNPM-ff5c93?style=flat-square&amp;logo=pnpm&amp;logoColor=white" alt="PNPM">
+  </a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=Vue.volar">
+    <img src="https://img.shields.io/badge/-Volar-42b883?style=flat-square&amp;logo=vue.js&amp;logoColor=white" alt="Volar">
+  </a>
+  <a href="https://vitest.dev/">
+    <img src="https://img.shields.io/badge/-Vitest-42b883?style=flat-square&amp;logo=vue.js&amp;logoColor=white" alt="Vitest">
+  </a>
+  <a href="https://www.cypress.io/">
+    <img src="https://img.shields.io/badge/-Cypress-17202c?style=flat-square&amp;logo=cypress&amp;logoColor=white" alt="Cypress">
+  </a>
+  <a href="https://eslint.org/">
+    <img src="https://img.shields.io/badge/-ESLint-4b32c3?style=flat-square&amp;logo=eslint&amp;logoColor=white" alt="ESLint">
+  </a>
+  <a href="https://github.com/antfu/eslint-config">
+    <img src="https://img.shields.io/badge/-Antfu-42b883?style=flat-square&amp;logo=vue.js&amp;logoColor=white" alt="Antfu">
+  </a>
+</div>
 
 # Vue 3 Starter
 
-This is my personal take on a Vite + Vue 3 template. If you want to try it:
+This is my take on a Vite + Vue 3 template. If you want to try it:
 
 ```sh
 degit RazorSiM/vue-starter
@@ -33,7 +53,8 @@ Here's a list of what's included in this template. Everything has been configure
   - [@unocss/preset-icons](https://github.com/unocss/unocss/tree/main/packages/preset-icons) to use icons from [Icones](https://icones.js.org/);
   - [@unocss/preset-web-fonts](https://github.com/unocss/unocss/tree/main/packages/preset-typography) so you can grab your web fonts and set them up easily;
   - [@unocss/transformer-variant-group](https://github.com/unocss/unocss/tree/main/packages/transformer-variant-group) to use the `group` variant; ex: `hover:(bg-blue-500 text-white font-bold)`;
-- Scaffolded an example of how you could implement a multi-layout approach
+- Scaffolded an example of how you could implement a multi-layout approach;
+- Scaffolded an example of how you could implement using markdown vue components with [unplugin-vue-markdown](https://github.com/unplugin/unplugin-vue-markdown/);
 
 ### Development Experience
 

@@ -2,6 +2,8 @@ import { URL, fileURLToPath } from 'node:url'
 import Unocss from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
+import Markdown from 'unplugin-vue-markdown/vite'
+import Shikiji from 'markdown-it-shikiji'
 import { defineConfig } from 'vite'
 
 import Vue from '@vitejs/plugin-vue'
@@ -10,7 +12,9 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    Vue(),
+    Vue({
+      include: [/\.vue$/, /\.md$/],
+    }),
     vueJsx(),
     AutoImport({
       include: [
@@ -25,8 +29,19 @@ export default defineConfig({
         enabled: true,
       },
     }),
+    Markdown({
+      async markdownItSetup(md) {
+        md.use(await Shikiji({
+          themes: {
+            light: 'rose-pine-dawn',
+            dark: 'rose-pine',
+          },
+        }))
+      },
+    }),
     Components({
       dts: true,
+      extensions: ['vue', 'md'],
       types: [
         {
           from: 'vue-router',
@@ -40,5 +55,8 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
+  },
+  build: {
+    sourcemap: true,
   },
 })

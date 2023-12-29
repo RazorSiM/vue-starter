@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const isDark = useDark({
-  selector: 'body',
+  selector: 'html',
   attribute: 'class',
   valueDark: 'dark',
   valueLight: 'light',
@@ -10,7 +10,7 @@ const toggleDark = useToggle(isDark)
 
 <template>
   <div
-    class="h-screen w-full overflow-x-hidden overflow-y-auto bg-gray-50 font-sans text-gray-900 transition dark:(bg-gray-900 text-gray-50)"
+    class="h-screen w-full overflow-x-hidden overflow-y-auto bg-gray-50 text-gray-900 font-sans transition dark:(bg-gray-900 text-gray-50)"
   >
     <header
       class="mx-auto flex items-center justify-between gap-5 p-10 container"
