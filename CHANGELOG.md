@@ -1,5 +1,11 @@
 # @razorsim/vue-starter
 
+## 2.2.0
+
+### Minor Changes
+
+- [#129](https://github.com/RazorSiM/vue-starter/pull/129) [`24526cf`](https://github.com/RazorSiM/vue-starter/commit/24526cf540ee6e1089186ccb0257ad581ecc86be) Thanks [@RazorSiM](https://github.com/RazorSiM)! - Add Changelog page
+
 ## 2.1.0
 
 ### Minor Changes
