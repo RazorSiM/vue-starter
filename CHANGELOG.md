@@ -1,5 +1,11 @@
 # @razorsim/vue-starter
 
+## 2.1.0
+
+### Minor Changes
+
+- [#127](https://github.com/RazorSiM/vue-starter/pull/127) [`4429c34`](https://github.com/RazorSiM/vue-starter/commit/4429c34ecd3f14390a6c2ae92a6691ea2b0295f4) Thanks [@RazorSiM](https://github.com/RazorSiM)! - Implement unplugin-vue-markdown example
+
 ## 2.0.1
 
 ### Patch Changes
