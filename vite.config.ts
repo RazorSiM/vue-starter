@@ -6,6 +6,7 @@ import Components from 'unplugin-vue-components/vite'
 import Markdown from 'unplugin-vue-markdown/vite'
 import { fromHighlighter } from 'markdown-it-shikiji/core'
 import { getHighlighter } from 'shikiji'
+import { unheadVueComposablesImports } from '@unhead/vue'
 
 import { defineConfig } from 'vite'
 
@@ -40,7 +41,7 @@ export default defineConfig(async () => {
           /\.vue\?vue/, // .vue
           /\.md$/, // .md
         ],
-        imports: ['vue', 'vue-router', '@vueuse/core'],
+        imports: ['vue', 'vue-router', '@vueuse/core', unheadVueComposablesImports],
         dts: true,
         eslintrc: {
           enabled: true,
