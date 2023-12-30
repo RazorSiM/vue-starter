@@ -1,5 +1,11 @@
 # @razorsim/vue-starter
 
+## 2.2.1
+
+### Patch Changes
+
+- [#131](https://github.com/RazorSiM/vue-starter/pull/131) [`af6bbe6`](https://github.com/RazorSiM/vue-starter/commit/af6bbe6d8225a4c6a0f74a008cd734db398d5dd0) Thanks [@RazorSiM](https://github.com/RazorSiM)! - Add Catppuccin themes to shikiji
+
 ## 2.2.0
 
 ### Minor Changes
