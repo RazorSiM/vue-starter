@@ -1,5 +1,11 @@
 # @razorsim/vue-starter
 
+## 2.3.0
+
+### Minor Changes
+
+- [#133](https://github.com/RazorSiM/vue-starter/pull/133) [`4636e7f`](https://github.com/RazorSiM/vue-starter/commit/4636e7ff9a0185f0ec82e4b625e26036a00206cc) Thanks [@RazorSiM](https://github.com/RazorSiM)! - Add unhead support and example usage
+
 ## 2.2.1
 
 ### Patch Changes
