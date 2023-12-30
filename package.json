@@ -17,6 +17,7 @@
     "postinstall": "lefthook install"
   },
   "dependencies": {
+    "@unhead/vue": "^1.8.9",
     "@vueuse/core": "^10.7.1",
     "pinia": "^2.1.7",
     "vue": "^3.4.2",

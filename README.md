@@ -30,7 +30,7 @@
 
 # Vue 3 Starter
 
-This is my take on a Vite + Vue 3 template. If you want to try it:
+This is my take on a Vite + Vue 3 template, [deployed here](https://vue-starter-razorsim.vercel.app/). If you want to spin it locally:
 
 ```sh
 degit RazorSiM/vue-starter
@@ -53,8 +53,10 @@ Here's a list of what's included in this template. Everything has been configure
   - [@unocss/preset-icons](https://github.com/unocss/unocss/tree/main/packages/preset-icons) to use icons from [Icones](https://icones.js.org/);
   - [@unocss/preset-web-fonts](https://github.com/unocss/unocss/tree/main/packages/preset-typography) so you can grab your web fonts and set them up easily;
   - [@unocss/transformer-variant-group](https://github.com/unocss/unocss/tree/main/packages/transformer-variant-group) to use the `group` variant; ex: `hover:(bg-blue-500 text-white font-bold)`;
+- [unhead](https://unhead.unjs.io/) for SEO and page metadata;
 - Scaffolded an example of how you could implement a multi-layout approach;
 - Scaffolded an example of how you could implement using markdown vue components with [unplugin-vue-markdown](https://github.com/unplugin/unplugin-vue-markdown/);
+- Support for [Shikiji](https://shikiji.netlify.app/) for markdown syntax highlighting;
 
 ### Development Experience
 
@@ -65,6 +67,7 @@ Here's a list of what's included in this template. Everything has been configure
 - [Unplugin Auto Import](https://github.com/antfu/unplugin-auto-import) to automatically import stuff in your files; No more `import { defineComponent } from 'vue'`;
 - [Unplugin Vue Components](https://github.com/antfu/unplugin-vue-components) to automatically import components;
 - [Unplugin Vue Macros](https://github.com/sxzz/unplugin-vue-macros) to extend Vue macros and syntax sugar;
+- [Changesets](https://github.com/changesets/changesets) to manage changelogs and releases;
 - Vscode will fix and format on save with Eslint;
 
 ### Testing

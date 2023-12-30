@@ -18,6 +18,7 @@ const toggleDark = useToggle(isDark)
       <TopNav />
       <button
         class="rounded-full px-2 py-2 font-bold leading-none transition hover:(bg-yellow-200) focus:outline-none hover:dark:(bg-indigo-900)"
+        aria-label="Toggle Dark Mode"
         @click="toggleDark()"
       >
         <div v-if="!isDark" class="i-fluent-emoji-new-moon h-10 w-10" />

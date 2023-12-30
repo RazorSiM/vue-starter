@@ -13,6 +13,8 @@ const router = createRouter({
       component: HomeView,
       meta: {
         layout: 'DefaultLayout',
+        title: 'Home',
+        description: 'Vue Starter Template by Simone Colabufalo - github.com/RazorSiM',
       },
     },
     {
@@ -21,17 +23,18 @@ const router = createRouter({
       component: Changelog,
       meta: {
         layout: 'DefaultLayout',
+        title: 'Changelog',
+        description: 'Vue Starter Template by Simone Colabufalo - github.com/RazorSiM',
       },
     },
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: AboutView,
       meta: {
         layout: 'EmptyLayout',
+        title: 'About',
+        description: 'Vue Starter Template by Simone Colabufalo - github.com/RazorSiM',
       },
     },
   ],

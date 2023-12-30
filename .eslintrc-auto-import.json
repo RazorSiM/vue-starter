@@ -289,6 +289,14 @@
     "usePerformanceObserver": true,
     "usePrevious": true,
     "watchDeep": true,
-    "watchImmediate": true
+    "watchImmediate": true,
+    "getActiveHead": true,
+    "injectHead": true,
+    "useHead": true,
+    "useHeadSafe": true,
+    "useSeoMeta": true,
+    "useServerHead": true,
+    "useServerHeadSafe": true,
+    "useServerSeoMeta": true
   }
 }
