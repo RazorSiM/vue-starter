@@ -1,5 +1,11 @@
 # @razorsim/vue-starter
 
+## 2.4.0
+
+### Minor Changes
+
+- [#135](https://github.com/RazorSiM/vue-starter/pull/135) [`9704f88`](https://github.com/RazorSiM/vue-starter/commit/9704f8857402bb7155565dde563135cdc34fd8b3) Thanks [@RazorSiM](https://github.com/RazorSiM)! - Add Vue Devtools next and update dependencies
+
 ## 2.3.0
 
 ### Minor Changes
