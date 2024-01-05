@@ -1,5 +1,11 @@
 # @razorsim/vue-starter
 
+## 2.4.1
+
+### Patch Changes
+
+- [#137](https://github.com/RazorSiM/vue-starter/pull/137) [`892168f`](https://github.com/RazorSiM/vue-starter/commit/892168f360e9efddf2f8aa79671bb542abe53d7c) Thanks [@RazorSiM](https://github.com/RazorSiM)! - Test changeset action
+
 ## 2.4.0
 
 ### Minor Changes
