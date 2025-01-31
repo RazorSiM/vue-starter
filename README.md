@@ -14,6 +14,7 @@ This template is configured to work seamlessly with ESLint, TypeScript, and VSCo
 ### Features
 
 - **[Vue 3](https://vuejs.org)**: The progressive JavaScript framework.
+- **SSG** build through the `pnpm generate` command, using [vite-ssg](https://github.com/antfu-collective/vite-ssg).
 - **[Vue Router](https://router.vuejs.org)**: For handling routes.
 - **[Pinia](https://pinia.vuejs.org)**: State management library.
 - **[VueUse](https://vueuse.org)**: Collection of essential Vue Composition Utilities.
