@@ -1,12 +1,11 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "compilerOptions": {
-    "composite": true,
-    "baseUrl": ".",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+
     "paths": {
       "@/*": ["./src/*"]
-    },
-    "types": []
+    }
   },
   "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "auto-imports.d.ts", "components.d.ts", "shims-vue.d.ts"],
   "exclude": ["src/**/__tests__/*"]

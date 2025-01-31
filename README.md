@@ -1,96 +1,56 @@
-<div style="display: flex; gap: 0.2rem">
-  <a href="https://vitejs.dev/">
-    <img src="https://img.shields.io/badge/-Vite-646cff?style=flat-square&amp;logo=vite&amp;logoColor=white" alt="Vite">
-  </a>
-  <a href="https://v3.vuejs.org/">
-    <img src="https://img.shields.io/badge/-Vue-42b883?style=flat-square&amp;logo=vue.js&amp;logoColor=white" alt="Vue">
-  </a>
-  <a href="https://www.typescriptlang.org/">
-    <img src="https://img.shields.io/badge/-TypeScript-007acc?style=flat-square&amp;logo=typescript&amp;logoColor=white" alt="TypeScript">
-  </a>
-  <a href="https://pnpm.io/">
-    <img src="https://img.shields.io/badge/-PNPM-ff5c93?style=flat-square&amp;logo=pnpm&amp;logoColor=white" alt="PNPM">
-  </a>
-  <a href="https://marketplace.visualstudio.com/items?itemName=Vue.volar">
-    <img src="https://img.shields.io/badge/-Volar-42b883?style=flat-square&amp;logo=vue.js&amp;logoColor=white" alt="Volar">
-  </a>
-  <a href="https://vitest.dev/">
-    <img src="https://img.shields.io/badge/-Vitest-42b883?style=flat-square&amp;logo=vue.js&amp;logoColor=white" alt="Vitest">
-  </a>
-  <a href="https://www.cypress.io/">
-    <img src="https://img.shields.io/badge/-Cypress-17202c?style=flat-square&amp;logo=cypress&amp;logoColor=white" alt="Cypress">
-  </a>
-  <a href="https://eslint.org/">
-    <img src="https://img.shields.io/badge/-ESLint-4b32c3?style=flat-square&amp;logo=eslint&amp;logoColor=white" alt="ESLint">
-  </a>
-  <a href="https://github.com/antfu/eslint-config">
-    <img src="https://img.shields.io/badge/-Antfu-42b883?style=flat-square&amp;logo=vue.js&amp;logoColor=white" alt="Antfu">
-  </a>
-</div>
-
 # Vue 3 Starter
 
-This is my take on a Vite + Vue 3 template, [deployed here](https://vue-starter-razorsim.vercel.app/). If you want to spin it locally:
+This is a comprehensive Vite + Vue 3 template, [deployed here](https://vue-starter-razorsim.vercel.app/). Follow the steps below to set it up locally:
 
 ```sh
-degit RazorSiM/vue-starter
+npx degit RazorSiM/vue-starter
 pnpm install
 ```
 
-## What's included
+## What's Included
 
-Here's a list of what's included in this template. Everything has been configured to work out of the box with Eslint, Typescript and VScode.
+This template is configured to work seamlessly with ESLint, TypeScript, and VSCode. Below is a detailed list of the included features and tools.
 
 ### Features
 
-- [Vue3](https://vuejs.org);
-- [Vue Router](https://router.vuejs.org/) to handle routes;
-- [Pinia](https://pinia.vuejs.org/) for state management;
-- [Vueuse](https://vueuse.org/) for useful composition API utilities;
-- UnoCSS for fast and super customizable styling configured with:
-  - [@unocss/reset](https://github.com/unocss/unocss#style-resetting) with Tailwind settings;
-  - [@unocss/preset-uno](https://github.com/unocss/unocss/tree/main/packages/preset-uno) as a base preset;
-  - [@unocss/preset-icons](https://github.com/unocss/unocss/tree/main/packages/preset-icons) to use icons from [Icones](https://icones.js.org/);
-  - [@unocss/preset-web-fonts](https://github.com/unocss/unocss/tree/main/packages/preset-typography) so you can grab your web fonts and set them up easily;
-  - [@unocss/transformer-variant-group](https://github.com/unocss/unocss/tree/main/packages/transformer-variant-group) to use the `group` variant; ex: `hover:(bg-blue-500 text-white font-bold)`;
-- [unhead](https://unhead.unjs.io/) for SEO and page metadata;
-- Scaffolded an example of how you could implement a multi-layout approach;
-- Scaffolded an example of how you could implement using markdown vue components with [unplugin-vue-markdown](https://github.com/unplugin/unplugin-vue-markdown/);
-- Support for [Shikiji](https://shikiji.netlify.app/) for markdown syntax highlighting;
+- **[Vue 3](https://vuejs.org)**: The progressive JavaScript framework.
+- **[Vue Router](https://router.vuejs.org)**: For handling routes.
+- **[Pinia](https://pinia.vuejs.org)**: State management library.
+- **[VueUse](https://vueuse.org)**: Collection of essential Vue Composition Utilities.
+- **UnoCSS**: Fast and highly customizable utility-first CSS framework.
+  - **[@unocss/reset](https://github.com/unocss/unocss#style-resetting)**: Tailwind settings for style resetting.
+  - **[@unocss/preset-uno](https://github.com/unocss/unocss/tree/main/packages/preset-uno)**: Base preset.
+  - **[@unocss/preset-icons](https://github.com/unocss/unocss/tree/main/packages/preset-icons)**: Use icons from [Icones](https://icones.js.org/).
+  - **[@unocss/preset-web-fonts](https://github.com/unocss/unocss/tree/main/packages/preset-typography)**: Easily set up web fonts.
+  - **[@unocss/transformer-variant-group](https://github.com/unocss/unocss/tree/main/packages/transformer-variant-group)**: Use the `group` variant (e.g., `hover:(bg-blue-500 text-white font-bold)`).
+- **[Unhead](https://unhead.unjs.io)**: For SEO and page metadata.
+- **Multi-Layout Support**: Example implementation of a multi-layout approach.
+- **Markdown Vue Components**: Example implementation using [unplugin-vue-markdown](https://github.com/unplugin/unplugin-vue-markdown).
+- **[Shikiji](https://shikiji.netlify.app)**: Markdown syntax highlighting support.
 
 ### Development Experience
 
-- [Vite](https://vitejs.dev/) for development and production builds;
-- Typescript support for `.vue` files;
-- [Eslint](https://eslint.org/) with [antfu/eslint-config](https://github.com/antfu/eslint-config) for linting and formatting;
-- [Lefthook](https://github.com/evilmartians/lefthook) for ez git(gud) hooks;
-- [Unplugin Auto Import](https://github.com/antfu/unplugin-auto-import) to automatically import stuff in your files; No more `import { defineComponent } from 'vue'`;
-- [Unplugin Vue Components](https://github.com/antfu/unplugin-vue-components) to automatically import components;
-- [Unplugin Vue Macros](https://github.com/sxzz/unplugin-vue-macros) to extend Vue macros and syntax sugar;
-- [Changesets](https://github.com/changesets/changesets) to manage changelogs and releases;
-- Vscode will fix and format on save with Eslint;
+- **[Vite](https://vitejs.dev)**: For development and production builds.
+- **TypeScript**: Full support for `.vue` files.
+- **[ESLint](https://eslint.org)**: Configured with [antfu/eslint-config](https://github.com/antfu/eslint-config) for linting and formatting.
+- **[Lefthook](https://github.com/evilmartians/lefthook)**: Easy git hooks.
+- **[Unplugin Auto Import](https://github.com/unplugin/unplugin-auto-import)**: Automatically import utilities in your files.
+- **[Unplugin Vue Components](https://github.com/unplugin/unplugin-vue-components)**: Automatically import Vue components.
+- **[Unplugin Vue Markdown](https://github.com/unplugin/unplugin-vue-markdown)**: Vue components in Markdown files.
+- **[Unplugin Turbo Console](https://github.com/unplugin/unplugin-turbo-console)**: Turbo charge your console.
+- **VSCode Integration**: Auto-fix and format on save with ESLint.
 
 ### Testing
 
-- [Vitest](https://vitest.dev/) for unit testing;
-- [Cypress](https://www.cypress.io/) for e2e testing;
+- **[Vitest](https://vitest.dev)**: For unit testing.
+- **[Playwright](https://playwright.dev)**: For end-to-end testing.
 
 ## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+- **[VSCode](https://code.visualstudio.com)**: Recommended IDE.
+- **[Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar)**: Vue language support.
 
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
-
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-## Customize configuration
+## Customize Configuration
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
 
@@ -112,31 +72,30 @@ pnpm run dev
 pnpm run build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+### Run Unit Tests with [Vitest](https://vitest.dev)
 
 ```sh
 pnpm run test:unit
 ```
 
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
+### Run End-to-End Tests with [Playwright](https://playwright.dev)
 
 ```sh
-pnpm run test:e2e:dev
+pnpm run test:e2e
 ```
 
-This runs the end-to-end tests against the Vite development server.
-It is much faster than the production build.
+This runs the end-to-end tests against the Vite development server. It is much faster than the production build.
 
-But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
+For CI environments, test the production build:
 
 ```sh
 pnpm run build
 pnpm run test:e2e
 ```
 
-### Lint, fix and format with [ESLint](https://eslint.org/) and @antfu/eslint-config settings
+### Lint, Fix, and Format with [ESLint](https://eslint.org) and @antfu/eslint-config settings
 
 ```sh
-pnpm run lint # will only check
-pnpm run lint:fix # will fix and format
+pnpm run lint # Check only
+pnpm run lint:fix # Fix and format
 ```

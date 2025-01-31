@@ -1,28 +1,26 @@
-import { URL, fileURLToPath } from 'node:url'
-import Unocss from 'unocss/vite'
-import AutoImport from 'unplugin-auto-import/vite'
-import Components from 'unplugin-vue-components/vite'
-import VueDevTools from 'vite-plugin-vue-devtools'
+import { fileURLToPath, URL } from 'node:url'
 
-import Markdown from 'unplugin-vue-markdown/vite'
-import Shikiji from 'markdown-it-shikiji'
-
+import Shiki from '@shikijs/markdown-it'
 import { unheadVueComposablesImports } from '@unhead/vue'
-
+import vue from '@vitejs/plugin-vue'
+import UnoCSS from 'unocss/vite'
+import AutoImport from 'unplugin-auto-import/vite'
+import TurboConsole from 'unplugin-turbo-console/vite'
+import Components from 'unplugin-vue-components/vite'
+import Markdown from 'unplugin-vue-markdown/vite'
 import { defineConfig } from 'vite'
+import vueDevTools from 'vite-plugin-vue-devtools'
+import { configDefaults } from 'vitest/config'
 
-import Vue from '@vitejs/plugin-vue'
-import vueJsx from '@vitejs/plugin-vue-jsx'
-
-// https://vitejs.dev/config/
+// https://vite.dev/config/
 export default defineConfig(async () => {
   return {
     plugins: [
-      Vue({
+      vue({
         include: [/\.vue$/, /\.md$/],
       }),
-      vueJsx(),
-      VueDevTools(),
+      vueDevTools(),
+      UnoCSS(),
       AutoImport({
         include: [
           /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
@@ -30,15 +28,23 @@ export default defineConfig(async () => {
           /\.vue\?vue/, // .vue
           /\.md$/, // .md
         ],
-        imports: ['vue', 'vue-router', '@vueuse/core', unheadVueComposablesImports],
-        dts: true,
+        imports: [
+          'vue',
+          'vue-router',
+          'pinia',
+          '@vueuse/core',
+          unheadVueComposablesImports,
+        ],
+        dts: './auto-imports.d.ts',
         eslintrc: {
           enabled: true,
+          filepath: './eslintrc-auto-import.json',
         },
       }),
       Markdown({
+        headEnabled: true,
         async markdownItSetup(md) {
-          md.use(await Shikiji({
+          md.use(await Shiki({
             themes: {
               light: 'catppuccin-latte',
               dark: 'catppuccin-mocha',
@@ -48,23 +54,28 @@ export default defineConfig(async () => {
       }),
       Components({
         dts: true,
-        extensions: ['vue', 'md'],
+        collapseSamePrefixes: true,
+        directoryAsNamespace: true,
         types: [
           {
             from: 'vue-router',
             names: ['RouterLink', 'RouterView'],
           },
         ],
+        extensions: ['vue', 'md'],
+        include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
       }),
-      Unocss(),
+      TurboConsole(),
     ],
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
     },
-    build: {
-      sourcemap: true,
+    test: {
+      environment: 'jsdom',
+      exclude: [...configDefaults.exclude, 'e2e/**'],
+      root: fileURLToPath(new URL('./', import.meta.url)),
     },
   }
 })
