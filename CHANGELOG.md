@@ -1,5 +1,34 @@
 # @razorsim/vue-starter
 
+## v3.0.0
+
+
+### 🚀 Enhancements
+
+- Update config ([#119](https://github.com/razorsim/vue-starter/pull/119))
+- Markdown Components ([#127](https://github.com/razorsim/vue-starter/pull/127))
+- Add unhead support ([#133](https://github.com/razorsim/vue-starter/pull/133))
+- Add vue devtools next and update dependencies ([#135](https://github.com/razorsim/vue-starter/pull/135))
+- Update packages and general refactor ([#145](https://github.com/razorsim/vue-starter/pull/145))
+
+### 🩹 Fixes
+
+- Changeset workflow ([#120](https://github.com/razorsim/vue-starter/pull/120))
+- Setup-node action ([#121](https://github.com/razorsim/vue-starter/pull/121))
+- Enable pnpm in workflow ([#122](https://github.com/razorsim/vue-starter/pull/122))
+- Naming in workflow steps ([#124](https://github.com/razorsim/vue-starter/pull/124))
+
+### 🏡 Chore
+
+- Add catppuccin themes ([#131](https://github.com/razorsim/vue-starter/pull/131))
+- Test ci run ([#137](https://github.com/razorsim/vue-starter/pull/137))
+- Update dependencies ([#139](https://github.com/razorsim/vue-starter/pull/139))
+
+### ❤️ Contributors
+
+- Simone Colabufalo ([@RazorSiM](http://github.com/RazorSiM))
+- Raz <me@raz.works>
+
 ## 2.4.1
 
 ### Patch Changes
