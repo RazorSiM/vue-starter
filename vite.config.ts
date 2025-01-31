@@ -13,7 +13,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 import { configDefaults } from 'vitest/config'
 
 // https://vite.dev/config/
-export default defineConfig(async () => {
+export default defineConfig(async ({ mode }) => {
   return {
     plugins: [
       vue({
@@ -70,6 +70,7 @@ export default defineConfig(async () => {
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
+        '/src/main.ts': mode === 'SSG' ? '/src/ssg.ts' : '/src/spa.ts',
       },
     },
     test: {

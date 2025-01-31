@@ -4,6 +4,16 @@ import ReadME from '../../README.md'
 
 const counterStore = useCounterStore()
 const counterColor = computed(() => (counterStore.count > 0 ? 'text-indigo-400' : 'text-pink-300'))
+
+useHead({
+  title: 'Vue Starter',
+  meta: [
+    {
+      name: 'description',
+      content: 'Vue Starter',
+    },
+  ],
+})
 </script>
 
 <template>

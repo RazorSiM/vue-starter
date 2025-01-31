@@ -1,11 +1,11 @@
 import HomeView from '@/views/HomeView.vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createMemoryHistory, createRouter, createWebHistory } from 'vue-router'
 
 const AboutView = () => import('@/views/AboutView.vue')
 const Changelog = () => import ('@/views/ChangelogView.vue')
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: import.meta.env.MODE === 'SSG' ? createMemoryHistory(import.meta.env.BASE_URL) : createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
