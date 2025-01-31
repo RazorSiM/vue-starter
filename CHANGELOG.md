@@ -1,5 +1,17 @@
 # @razorsim/vue-starter
 
+## v3.1.0
+
+[compare changes](https://github.com/razorsim/vue-starter/compare/v3.0.0...v3.1.0)
+
+### 🚀 Enhancements
+
+- Add ssg optional build with vite-ssg plugin ([#146](https://github.com/razorsim/vue-starter/pull/146))
+
+### ❤️ Contributors
+
+- Simone Colabufalo ([@RazorSiM](http://github.com/RazorSiM))
+
 ## v3.0.0
 
 
