@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
+import { createRouter, createWebHistory } from 'vue-router'
 
 const AboutView = () => import('@/views/AboutView.vue')
 const Changelog = () => import ('@/views/ChangelogView.vue')

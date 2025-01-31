@@ -3,5 +3,3 @@ pre-commit:
   commands:
     lint:
       run: pnpm eslint {staged_files}
-    lint:fix:
-      run: pnpm eslint --fix {staged_files}

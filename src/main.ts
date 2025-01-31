@@ -1,17 +1,16 @@
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
 import { createHead } from '@unhead/vue'
-
+import { createPinia } from 'pinia'
+import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router'
-
-import 'virtual:uno.css'
-
-import '@unocss/reset/tailwind-compat.css'
-import '@/assets/styles/global.css'
 
 import DefaultLayout from './layouts/DefaultLayout.vue'
+
 import EmptyLayout from './layouts/EmptyLayout.vue'
+import router from './router'
+import 'virtual:uno.css'
+
+import '@unocss/reset/tailwind.css'
+import '@/assets/styles/main.css'
 
 const app = createApp(App)
 const head = createHead()
