@@ -1,6 +1,6 @@
 # Vue 3 Starter
 
-A comprehensive Vite + Vue 3 template, [deployed here](https://vue-starter-razorsim.vercel.app/).
+A comprehensive Vite + Vue 3 template, [deployed here](https://vue-starter.0xraz.workers.dev/).
 Requires **Node 26** and **pnpm 11**.
 
 ```sh
@@ -25,7 +25,7 @@ formatting.
   | file               | route                                              |
   | ------------------ | -------------------------------------------------- |
   | `index.vue`        | `/`                                                |
-  | `about.vue`        | `/about`                                           |
+  | `layout.vue`       | `/layout`                                          |
   | `[id].vue`         | `/:id`                                             |
   | `[[id]].vue`       | `/:id?` (optional param)                           |
   | `[...path].vue`    | `/:path(.*)` (404 catch-all)                       |
@@ -67,7 +67,7 @@ formatting.
 - **Multi-layout support** — `src/App.vue` resolves layouts with an `import.meta.glob` lookup keyed
   by `route.meta.layout`, so adding `src/layouts/Foo.vue` is all it takes. No extra dependency.
   `DefaultLayout` supplies the app chrome; `EmptyLayout` is deliberately bare. The
-  [/about](https://vue-starter-razorsim.vercel.app/about) page is a live demo — switch layouts and
+  [/layout](https://vue-starter.0xraz.workers.dev/layout) page is a live demo — switch layouts and
   watch the header appear and disappear, backed by the `useLayout()` composable.
 - **Markdown Vue components** via
   [unplugin-vue-markdown](https://github.com/unplugin/unplugin-vue-markdown) — this README is
@@ -102,7 +102,7 @@ formatting.
 
 ## The data layer
 
-[/demo](https://vue-starter-razorsim.vercel.app/demo) is one resource — a members list — wired
+[/demo](https://vue-starter.0xraz.workers.dev/demo) is one resource — a members list — wired
 through every data library in the stack, rather than three disconnected toys:
 
 ```
@@ -289,7 +289,7 @@ pnpm release       # cut it
    `fix:`/`perf:`/`refactor:`/`docs:`/`build:` the patch, a `!` or `BREAKING CHANGE:` the major —
    and writes it to `package.json`;
 3. prepends the new section to `CHANGELOG.md`, which the
-   [/changelog](https://vue-starter-razorsim.vercel.app/changelog) page renders as-is;
+   [/changelog](https://vue-starter.0xraz.workers.dev/changelog) page renders as-is;
 4. commits `chore(release): vX.Y.Z`, creates an annotated `vX.Y.Z` tag, and pushes both
    (`git push --follow-tags`);
 5. creates the matching GitHub release.
@@ -318,6 +318,46 @@ Two conventions worth keeping, since the changelog is only as good as the commit
   breaking. Dependabot/Renovate noise stays out on its own.
 - **Non-conventional commit messages are skipped entirely.** A change committed as
   `fixed the thing` will not appear in any release.
+
+## Deployment
+
+Deployed to **Cloudflare Workers** as static assets, at
+[vue-starter.0xraz.workers.dev](https://vue-starter.0xraz.workers.dev).
+
+`wrangler.jsonc` is an assets-only Worker: no `main`, so no Worker code runs and Cloudflare serves
+`dist/` from its edge. Two details carry weight:
+
+- **`not_found_handling: "single-page-application"`.** vue-router runs in history mode, so `/demo`
+  matches no file on disk — without this, a hard refresh anywhere but `/` returns Cloudflare's 404.
+  Real files still take precedence, which is what keeps `/mockServiceWorker.js` working; a fallback
+  to `index.html` there would silently break the demo page.
+- **Worker, not Pages.** Pages is in maintenance mode and cannot grow server-side code. Adding a
+  `"main"` entry to `wrangler.jsonc` turns this into a full Worker with the same assets in front of
+  it, so an API route later is a config change rather than a migration.
+
+CI deploys on every push to `main`, from the `deploy` job in `.github/workflows/ci.yml`. It is gated
+behind `needs: ci`, so only a commit that passed lint, types, unit tests and e2e ever ships. Two
+repository secrets are required:
+
+| secret                  | where to get it                                                              |
+| ----------------------- | ---------------------------------------------------------------------------- |
+| `CLOUDFLARE_API_TOKEN`  | Cloudflare dashboard → My Profile → API Tokens → **Edit Cloudflare Workers** |
+| `CLOUDFLARE_ACCOUNT_ID` | Workers & Pages → Account details, or `wrangler whoami`                      |
+
+They are secrets rather than values in the workflow on purpose: this is a template, and a fork
+should not inherit someone else's account ID. With no token set the deploy job logs a notice and
+exits green, so forks do not get a red `main`.
+
+To deploy by hand:
+
+```sh
+pnpm exec wrangler login
+pnpm run cf:deploy    # build + wrangler deploy
+pnpm run cf:preview   # build + wrangler versions upload — a preview URL, production untouched
+```
+
+Note the `pnpm run`: `pnpm deploy` is a built-in pnpm command for workspace pruning and will _not_
+run this script.
 
 ## Customize Configuration
 

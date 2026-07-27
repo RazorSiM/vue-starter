@@ -7,6 +7,14 @@ import { expect, test } from '@playwright/test'
 test.describe('demo page', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/demo')
+
+    // Every test gets a fresh browser context, so every test pays the cold-start cost
+    // in full: registering the service worker, pulling the MSW bundle, then the 400ms
+    // the handler sleeps. Under `fullyParallel` against a dev server that is still
+    // compiling, that overruns the 5s expect default — which is a slow boot, not a
+    // broken app. Absorb it here, once, instead of raising expect.timeout globally
+    // and blunting every other assertion in the suite.
+    await expect(page.locator('tbody tr').first()).toBeVisible({ timeout: 20_000 })
   })
 
   test('renders the seeded members once the query resolves', async ({ page }) => {
