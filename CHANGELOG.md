@@ -1,5 +1,31 @@
 # @razorsim/vue-starter
 
+## v4.0.0
+
+[compare changes](https://github.com/razorsim/vue-starter/compare/v3.1.0...v4.0.0)
+
+### 🚀 Enhancements
+
+- ⚠️  Modernize the stack for Vue 3.5, Vite 8 and TypeScript 6 ([#158](https://github.com/razorsim/vue-starter/pull/158))
+- Add reka-ui for accessible interaction primitives ([#159](https://github.com/razorsim/vue-starter/pull/159))
+
+### 🩹 Fixes
+
+- **ci:** Release through a pull request instead of pushing to main ([#160](https://github.com/razorsim/vue-starter/pull/160))
+
+### 🏡 Chore
+
+- Update README ([810f1fd](https://github.com/razorsim/vue-starter/commit/810f1fd))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Modernize the stack for Vue 3.5, Vite 8 and TypeScript 6 ([#158](https://github.com/razorsim/vue-starter/pull/158))
+
+### ❤️ Contributors
+
+- Simone Colabufalo ([@RazorSiM](https://github.com/RazorSiM))
+- Raz ([@RazorSiM](https://github.com/RazorSiM))
+
 ## v3.1.0
 
 [compare changes](https://github.com/razorsim/vue-starter/compare/v3.0.0...v3.1.0)
