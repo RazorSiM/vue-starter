@@ -3,10 +3,23 @@
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
 
+    // Required by vue-router/volar/sfc-typed-router: it reads
+    // `options?.rootDir ?? compilerOptions.rootDir` and silently drops per-file
+    // typed useRoute() without it.
+    "rootDir": ".",
+
+    // Partially compensates for oxlint's blind spot: no-unused-vars is inert
+    // inside .vue <script setup> because the linter cannot see template usage.
+    // vue-tsc can, so it catches unused script-setup locals that lint no longer will.
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "auto-imports.d.ts", "components.d.ts", "shims-vue.d.ts"],
-  "exclude": ["src/**/__tests__/*"]
+  "vueCompilerOptions": {
+    "plugins": ["vue-router/volar/sfc-typed-router"]
+  },
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "auto-imports.d.ts", "components.d.ts"]
 }

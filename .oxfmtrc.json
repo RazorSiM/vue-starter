@@ -1,0 +1,35 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 100,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "arrowParens": "always",
+  "bracketSpacing": true,
+  "endOfLine": "lf",
+  "insertFinalNewline": true,
+  "vueIndentScriptAndStyle": false,
+  "singleAttributePerLine": false,
+  "htmlWhitespaceSensitivity": "css",
+  "sortImports": {
+    "internalPattern": ["@/", "~/", "#"],
+    "newlinesBetween": true,
+    "ignoreCase": true
+  },
+  "sortPackageJson": false,
+  "ignorePatterns": [
+    "node_modules",
+    "dist",
+    "coverage",
+    "playwright-report",
+    "test-results",
+    "auto-imports.d.ts",
+    "components.d.ts",
+    "src/typed-router.d.ts",
+    "public/mockServiceWorker.js",
+    "CHANGELOG.md",
+    "pnpm-lock.yaml"
+  ]
+}

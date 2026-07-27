@@ -1,6 +1,14 @@
 <script lang="ts" setup>
 import Changelog from '../../CHANGELOG.md'
 
+definePage({
+  meta: {
+    layout: 'DefaultLayout',
+    title: 'Changelog',
+    description: 'Vue Starter Template by Simone Colabufalo - github.com/RazorSiM',
+  },
+})
+
 useHead({
   title: 'Changelog',
   meta: [
@@ -13,7 +21,7 @@ useHead({
 </script>
 
 <template>
-  <div class="mx-auto prose">
+  <div class="prose max-w-none dark:prose-invert">
     <Changelog />
   </div>
 </template>

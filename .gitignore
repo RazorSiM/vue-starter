@@ -14,12 +14,10 @@ dist-ssr
 coverage
 *.local
 
-/cypress/videos/
-/cypress/screenshots/
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json
 .idea
 *.suo
 *.ntvs*
@@ -31,3 +29,16 @@ coverage
 
 test-results/
 playwright-report/
+
+# devenv
+.devenv*
+devenv.local.nix
+devenv.local.yaml
+
+# direnv
+.direnv
+
+# wrangler's local state, and the secrets file it reads for `wrangler dev`
+.wrangler
+.dev.vars
+.dev.vars.*
