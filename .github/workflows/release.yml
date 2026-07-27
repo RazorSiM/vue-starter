@@ -1,8 +1,16 @@
 name: Release
 
-# Manual only. The same release can be cut locally with `pnpm release`
-# (see the Releases section of the README) — this workflow exists so it can
-# also be done from the GitHub UI, without a token on the machine.
+# Two steps, because `main` is protected and takes changes only through a pull
+# request — a bot pushing the bump commit straight to it gets GH006'd:
+#
+#   1. `release-pr` (manual) bumps the version on a `release/*` branch and opens
+#      the PR. Nothing is tagged and nothing is published yet.
+#   2. `tag` (on merge) tags the commit that landed and cuts the GitHub release.
+#
+# The same release can still be cut locally with `pnpm release` (see the
+# Releases section of the README): that pushes as you, and admins are exempt
+# from the branch protection. This workflow exists so it can also be done from
+# the GitHub UI, without a token on the machine.
 on:
   workflow_dispatch:
     inputs:
@@ -11,6 +19,12 @@ on:
         type: choice
         default: auto
         options: [auto, patch, minor, major]
+  # A release commit always changes `version`, so nothing is missed by filtering
+  # on package.json. The `tag` job no-ops on anything that is not a release, so
+  # this is only noise reduction over dependency bumps.
+  push:
+    branches: [main]
+    paths: [package.json]
 
 # Two overlapping releases would race on the tag and the bump commit.
 concurrency:
@@ -18,32 +32,34 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  release:
+  release-pr:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
 
-    # Needed twice over: to push the bump commit and tag back to main, and for
-    # changelogen to create the GitHub release through the API.
     permissions:
-      contents: write
+      contents: write # push the release/* branch
+      pull-requests: write # open the PR
 
     steps:
       # Full history, not the default shallow clone: changelogen reads the tags
       # and every commit since the last one to build the changelog.
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
 
-      # Locally the same guarantee comes from lefthook's pre-push hook, which is
-      # disabled below. Never tag a commit that does not pass the checks.
+      # A PR opened with GITHUB_TOKEN does not trigger `on: pull_request`, so
+      # ci.yml never runs on the release PR and `main` has no required status
+      # checks. These two steps are the whole gate — never tag a commit that
+      # does not pass the checks.
       - name: Check
         run: pnpm run check
 
@@ -63,17 +79,119 @@ jobs:
           git config user.name "$ACTOR"
           git config user.email "$ACTOR_ID+$ACTOR@users.noreply.github.com"
 
+      # --no-tag/--no-push/--no-github: the tag and the GitHub release belong to
+      # the commit that lands on main, not to this branch, so the `tag` job cuts
+      # them after the merge. All this leaves behind is a commit touching
+      # CHANGELOG.md and package.json.
+      #
       # LEFTHOOK=0: `pnpm install` ran `prepare` -> `lefthook install`, so the
-      # hooks exist on the runner. Without this, changelogen's own commit and
-      # push would re-run lint/format/type-check that the steps above just ran.
-      - name: Release
+      # hooks exist on the runner. Without this, changelogen's commit would
+      # re-run the lint/format/type-check that the steps above just ran.
+      - name: Bump the version and the changelog
+        id: bump
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LEFTHOOK: '0'
           BUMP: ${{ inputs.bump }}
         run: |
           if [ "$BUMP" = auto ]; then
-            pnpm exec changelogen --release --push
+            pnpm exec changelogen --release --clean --no-tag --no-push --no-github
           else
-            pnpm exec changelogen --release --push "--$BUMP"
+            pnpm exec changelogen --release --clean --no-tag --no-push --no-github "--$BUMP"
           fi
+          echo "version=$(node -p 'require("./package.json").version')" >> "$GITHUB_OUTPUT"
+
+      # --force so that re-dispatching the same bump updates the existing branch
+      # instead of being rejected. Only ever touches the release/* namespace,
+      # which nothing but this job writes to.
+      - name: Push the release branch
+        env:
+          LEFTHOOK: '0'
+          VERSION: ${{ steps.bump.outputs.version }}
+        run: |
+          git switch -c "release/v$VERSION"
+          git push --force origin "release/v$VERSION"
+
+      - name: Open the release PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.bump.outputs.version }}
+        run: |
+          if [ -n "$(gh pr list --head "release/v$VERSION" --state open --json number --jq '.[].number')" ]; then
+            echo "::notice::The PR for v$VERSION is already open — its branch was updated in place."
+            exit 0
+          fi
+          gh pr create \
+            --base main \
+            --head "release/v$VERSION" \
+            --title "chore(release): v$VERSION" \
+            --body "Merging this tags \`v$VERSION\` on main and publishes the GitHub release. The changelog is in the diff."
+
+  tag:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write # push the tag, create the release
+
+    # Tags are not covered by the branch protection, so the default token is
+    # enough here — only the push to `main` itself needed a pull request.
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # What identifies a landed release is the pair a release commit always
+      # produces: a version with no tag yet, and a changelog entry to publish as
+      # the release body. Deliberately not a match on the commit subject, which
+      # is editable in the squash-merge box.
+      - name: Did a release land?
+        id: check
+        run: |
+          VERSION=$(node -p 'require("./package.json").version')
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          if git rev-parse -q --verify "refs/tags/v$VERSION" >/dev/null; then
+            echo 'release=false' >> "$GITHUB_OUTPUT"
+            echo "::notice::v$VERSION is already tagged — nothing to release."
+          elif ! grep -qxF "## v$VERSION" CHANGELOG.md; then
+            echo 'release=false' >> "$GITHUB_OUTPUT"
+            echo "::notice::package.json is at $VERSION but CHANGELOG.md has no entry for it — not a release commit."
+          else
+            echo 'release=true' >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Configure git author
+        if: steps.check.outputs.release == 'true'
+        env:
+          ACTOR: ${{ github.actor }}
+          ACTOR_ID: ${{ github.actor_id }}
+        run: |
+          git config user.name "$ACTOR"
+          git config user.email "$ACTOR_ID+$ACTOR@users.noreply.github.com"
+
+      # `changelogen gh release` only warns and exits 0 when it cannot find the
+      # entry to publish, so the `gh release view` is what actually decides
+      # whether this job passes.
+      #
+      # LEFTHOOK=0 for the same reason as in the other job: `pnpm install` put
+      # the hooks on the runner, and the tag push has no business re-running
+      # lint/format/type-check on a commit that already passed them.
+      - name: Tag and publish the release
+        if: steps.check.outputs.release == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LEFTHOOK: '0'
+          VERSION: ${{ steps.check.outputs.version }}
+        run: |
+          git tag -a -m "v$VERSION" "v$VERSION"
+          git push origin "v$VERSION"
+          pnpm exec changelogen gh release "v$VERSION"
+          gh release view "v$VERSION" --json url --jq .url
