@@ -6,6 +6,15 @@
 allowBuilds:
   lefthook: true
 
+  # Rewrites public/mockServiceWorker.js whenever msw is upgraded, keyed off the
+  # "msw".workerDirectory field `msw init --save` wrote into package.json. Without
+  # it the committed worker silently drifts out of sync with the installed msw.
+  msw: true
+
+  # @tanstack/vue-query depends on vue-demi, whose postinstall points the package
+  # at the Vue 3 build. Skipping it leaves the Vue 2 entry in place.
+  vue-demi: true
+
 # pnpm 11 withholds packages published very recently (minimumReleaseAge).
 # Icon collections publish constantly, so this one is exempted.
 minimumReleaseAgeExclude:

@@ -28,6 +28,7 @@
     "auto-imports.d.ts",
     "components.d.ts",
     "src/typed-router.d.ts",
+    "public/mockServiceWorker.js",
     "CHANGELOG.md",
     "pnpm-lock.yaml"
   ]

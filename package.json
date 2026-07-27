@@ -31,12 +31,16 @@
     "prepare": "lefthook install"
   },
   "dependencies": {
+    "@tanstack/vue-form": "^1.33.2",
+    "@tanstack/vue-query": "^5.101.4",
+    "@tanstack/vue-table": "^8.21.3",
     "@unhead/vue": "^3.2.3",
     "@vue/devtools-api": "^8.2.1",
     "@vueuse/core": "^14.3.0",
     "pinia": "^4.0.2",
     "vue": "^3.5.40",
-    "vue-router": "^5.2.0"
+    "vue-router": "^5.2.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@iconify-json/lucide": "^1.2.120",
@@ -50,6 +54,7 @@
     "changelogen": "^0.6.2",
     "jsdom": "^29.1.1",
     "lefthook": "^2.1.10",
+    "msw": "^2.15.0",
     "oxfmt": "0.60.0",
     "oxlint": "~1.75.0",
     "oxlint-plugin-vize": "0.291.0",
@@ -64,5 +69,10 @@
     "vite-plugin-vue-devtools": "^8.2.1",
     "vitest": "^4.1.10",
     "vue-tsc": "^3.3.8"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }

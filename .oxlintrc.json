@@ -27,7 +27,8 @@
     "test-results",
     "auto-imports.d.ts",
     "components.d.ts",
-    "src/typed-router.d.ts"
+    "src/typed-router.d.ts",
+    "public/mockServiceWorker.js"
   ],
   "rules": {
     "no-console": "warn",
