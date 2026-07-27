@@ -26,6 +26,8 @@
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "check": "pnpm run lint && pnpm run format:check && pnpm run type-check",
+    "changelog": "changelogen",
+    "release": "changelogen --release --clean --push",
     "prepare": "lefthook install"
   },
   "dependencies": {
@@ -45,6 +47,7 @@
     "@vitejs/plugin-vue": "^6.0.8",
     "@vue/test-utils": "^2.4.11",
     "@vue/tsconfig": "^0.9.1",
+    "changelogen": "^0.6.2",
     "jsdom": "^29.1.1",
     "lefthook": "^2.1.10",
     "oxfmt": "0.60.0",

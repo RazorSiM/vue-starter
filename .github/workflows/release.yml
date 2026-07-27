@@ -1,0 +1,79 @@
+name: Release
+
+# Manual only. The same release can be cut locally with `pnpm release`
+# (see the Releases section of the README) — this workflow exists so it can
+# also be done from the GitHub UI, without a token on the machine.
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: Version bump ("auto" derives it from the conventional commits since the last tag)
+        type: choice
+        default: auto
+        options: [auto, patch, minor, major]
+
+# Two overlapping releases would race on the tag and the bump commit.
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    # Needed twice over: to push the bump commit and tag back to main, and for
+    # changelogen to create the GitHub release through the API.
+    permissions:
+      contents: write
+
+    steps:
+      # Full history, not the default shallow clone: changelogen reads the tags
+      # and every commit since the last one to build the changelog.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # Locally the same guarantee comes from lefthook's pre-push hook, which is
+      # disabled below. Never tag a commit that does not pass the checks.
+      - name: Check
+        run: pnpm run check
+
+      - name: Unit tests
+        run: pnpm run test
+
+      # Attribute the release commit to whoever dispatched the workflow. The
+      # <id>+<login>@users.noreply.github.com form is what GitHub matches against
+      # an account — that is all it takes for the commit to show the right avatar
+      # and profile link, without exposing a real address. Passed through env
+      # rather than interpolated into the script body.
+      - name: Configure git author
+        env:
+          ACTOR: ${{ github.actor }}
+          ACTOR_ID: ${{ github.actor_id }}
+        run: |
+          git config user.name "$ACTOR"
+          git config user.email "$ACTOR_ID+$ACTOR@users.noreply.github.com"
+
+      # LEFTHOOK=0: `pnpm install` ran `prepare` -> `lefthook install`, so the
+      # hooks exist on the runner. Without this, changelogen's own commit and
+      # push would re-run lint/format/type-check that the steps above just ran.
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LEFTHOOK: '0'
+          BUMP: ${{ inputs.bump }}
+        run: |
+          if [ "$BUMP" = auto ]; then
+            pnpm exec changelogen --release --push
+          else
+            pnpm exec changelogen --release --push "--$BUMP"
+          fi
