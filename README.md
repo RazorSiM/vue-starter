@@ -343,11 +343,24 @@ before anything reaches the remote. Nothing is ever published to npm — `packag
 
 ### Releasing from GitHub
 
-`.github/workflows/release.yml` does the same thing on a runner: **Actions → Release → Run
-workflow**, with a `bump` input of `auto` (default), `patch`, `minor` or `major`. It runs
-`pnpm check` and the unit tests first, then releases using the built-in `GITHUB_TOKEN` — so no
-token is needed locally. The workflow needs permission to push to `main`; if `main` is protected,
-either allow the `github-actions[bot]` actor or stick to the local `pnpm release`.
+`.github/workflows/release.yml` reaches the same end state on a runner, with no token needed
+locally. It takes two steps rather than one, because a protected `main` accepts changes only
+through a pull request and the built-in `GITHUB_TOKEN` cannot bypass that:
+
+1. **Actions → Release → Run workflow**, with a `bump` input of `auto` (default), `patch`,
+   `minor` or `major`. This runs `pnpm check` and the unit tests, does steps 1–3 above, and opens
+   a `release/vX.Y.Z` pull request containing just the `CHANGELOG.md` and `package.json` diff.
+2. **Merge that PR.** The push to `main` triggers the workflow's `tag` job, which creates the
+   annotated `vX.Y.Z` tag and the GitHub release.
+
+The `tag` job recognises a release by the pair a release commit always leaves behind — a version
+in `package.json` with no tag yet, plus a matching `## vX.Y.Z` heading in `CHANGELOG.md` — so
+ordinary commits that touch `package.json` pass straight through it.
+
+Two things to know before tightening `main`'s protection further: a PR opened with `GITHUB_TOKEN`
+does not trigger `on: pull_request`, so CI does not run on the release PR (the workflow's own
+check/test steps are the gate instead), and adding **required status checks** would therefore
+deadlock every release PR unless the PR is opened with a PAT or GitHub App token instead.
 
 Two conventions worth keeping, since the changelog is only as good as the commits:
 
