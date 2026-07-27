@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Reads the pnpm version from package.json's `packageManager` field,
+      # so it stays defined in exactly one place.
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Format check
+        run: pnpm run format:check
+
+      # Mandatory, never optional: with eslint-plugin-vue gone, vue-tsc is the
+      # only remaining Vue-aware static analysis in this repo.
+      - name: Type check
+        run: pnpm run type-check
+
+      - name: Unit tests
+        run: pnpm run test
+
+      # build-only, since type-check already ran as its own step above.
+      - name: Build
+        run: pnpm run build-only
+
+      # vue-router's plugin defaults `watch` to !CI, so it does one scan and writes.
+      # This fails loudly if someone forgot to commit a route rename.
+      - name: Generated files are up to date
+        run: git diff --exit-code -- auto-imports.d.ts components.d.ts src/typed-router.d.ts
+
+      # No PLAYWRIGHT_BROWSERS_PATH here (that is the NixOS dev-shell path),
+      # so Playwright downloads its own browsers normally.
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps
+
+      # CI=1 is set by Actions, so this tests `vite preview` on :4173 —
+      # which is why the build step must come first.
+      - name: E2E tests
+        run: pnpm run test:e2e
