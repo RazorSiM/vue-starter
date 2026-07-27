@@ -1,4 +1,16 @@
 {
-  "extends": "@tsconfig/node22/tsconfig.json",
+  "extends": "@tsconfig/node26/tsconfig.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "../node_modules/.tmp/tsconfig.e2e.tsbuildinfo",
+
+    // Playwright specs run in Node, not the browser: the `page` handle is a
+    // remote proxy, so no DOM lib here. Add "DOM" to `lib` if a spec ever calls
+    // page.evaluate() with a callback that touches `document` or `window`.
+    "types": ["node"],
+
+    // @tsconfig/node26 does not set this, and this project is now part of the
+    // root solution — without it, `vue-tsc --build` emits .js files into e2e/.
+    "noEmit": true
+  },
   "include": ["./**/*"]
 }
