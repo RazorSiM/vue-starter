@@ -1,0 +1,17 @@
+# pnpm 11 reads these here, not from the "pnpm" field in package.json.
+
+# lefthook's install script links its Go binary. pnpm blocks dependency build
+# scripts by default, and without this the `prepare: lefthook install` script
+# fails — silently leaving every contributor without git hooks.
+allowBuilds:
+  lefthook: true
+
+# pnpm 11 withholds packages published very recently (minimumReleaseAge).
+# Icon collections publish constantly, so this one is exempted.
+minimumReleaseAgeExclude:
+  - '@iconify-json/lucide@1.2.120'
+
+# oxlint-plugin-vize is pre-1.0 with a very high release cadence, so it is
+# pinned exactly and held there transitively.
+overrides:
+  oxlint-plugin-vize: 0.291.0
