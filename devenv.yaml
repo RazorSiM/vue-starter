@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=https://devenv.sh/devenv.schema.json
+
+inputs:
+  # Pinned to nixpkgs-unstable rather than devenv's own curated `rolling` pin.
+  # Rationale: `rolling` lags on the packages this repo cares about — at the time
+  # of writing it shipped Node 26.4.0 / pnpm 11.9.0 / playwright-driver 1.60.0,
+  # versus 26.5.0 / 11.15.0 / 1.61.1 here.
+  #
+  # NOTE: playwright-driver's version in this input dictates the `@playwright/test`
+  # pin in package.json. They must match exactly — see devenv.nix.
+  nixpkgs:
+    url: github:NixOS/nixpkgs/nixpkgs-unstable
