@@ -216,6 +216,7 @@ declare global {
   const useManualRefHistory: typeof import('@vueuse/core').useManualRefHistory
   const useMediaControls: typeof import('@vueuse/core').useMediaControls
   const useMediaQuery: typeof import('@vueuse/core').useMediaQuery
+  const useMembers: typeof import('./src/composables/useMembers').useMembers
   const useMemoize: typeof import('@vueuse/core').useMemoize
   const useMemory: typeof import('@vueuse/core').useMemory
   const useModel: typeof import('vue').useModel
@@ -330,4 +331,7 @@ declare global {
   // @ts-ignore
   export type { LayoutName } from './src/composables/useLayout'
   import('./src/composables/useLayout')
+  // @ts-ignore
+  export type { UseMembersOptions } from './src/composables/useMembers'
+  import('./src/composables/useMembers')
 }

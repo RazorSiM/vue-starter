@@ -4,6 +4,7 @@
 // `src/pages/<file>.vue` to a URL is the thing worth teaching.
 const links = [
   { to: '/', file: 'index', icon: 'i-lucide-house' },
+  { to: '/demo', file: 'demo', icon: 'i-lucide-flask-conical' },
   { to: '/changelog', file: 'changelog', icon: 'i-lucide-rotate-ccw' },
   { to: '/about', file: 'about', icon: 'i-lucide-layout-template' },
 ] as const

@@ -11,6 +11,10 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    DemoCounterCard: typeof import('./src/components/Demo/CounterCard.vue')['default']
+    DemoMemberForm: typeof import('./src/components/Demo/MemberForm.vue')['default']
+    DemoMembersPanel: typeof import('./src/components/Demo/MembersPanel.vue')['default']
+    DemoMemberTable: typeof import('./src/components/Demo/MemberTable.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TopNav: typeof import('./src/components/TopNav.vue')['default']
