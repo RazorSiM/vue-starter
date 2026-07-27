@@ -3,6 +3,26 @@
   "name": "vue-starter",
   "compatibility_date": "2026-07-27",
 
+  // A Custom Domain, not a route: Cloudflare creates the DNS record and manages the
+  // certificate itself, so there is nothing to add in the DNS dashboard. The zone
+  // (raz.wtf) has to live in the same account as the Worker, which it does.
+  "routes": [
+    {
+      "pattern": "vue-starter.raz.wtf",
+      "custom_domain": true,
+    },
+  ],
+
+  // Explicit, though adding `routes` alone would infer it: with a real domain there is
+  // no reason to also answer on vue-starter.0xraz.workers.dev.
+  "workers_dev": false,
+
+  // Load-bearing, and easy to lose. Since wrangler 4.44 preview URLs default to
+  // matching `workers_dev`, so turning the workers.dev route off would silently take
+  // `pnpm run cf:preview` with it. Previews stay on their own
+  // <version>-vue-starter.0xraz.workers.dev hostnames.
+  "preview_urls": true,
+
   // An assets-only Worker: there is no "main", so no Worker code runs and Cloudflare
   // serves ./dist straight from its edge cache. Add a "main" entry later if this ever
   // needs an API route — that is the reason this is a Worker rather than a Pages

@@ -1,6 +1,6 @@
 # Vue 3 Starter
 
-A comprehensive Vite + Vue 3 template, [deployed here](https://vue-starter.0xraz.workers.dev/).
+A comprehensive Vite + Vue 3 template, [deployed here](https://vue-starter.raz.wtf/).
 Requires **Node 26** and **pnpm 11**.
 
 ```sh
@@ -67,7 +67,7 @@ formatting.
 - **Multi-layout support** — `src/App.vue` resolves layouts with an `import.meta.glob` lookup keyed
   by `route.meta.layout`, so adding `src/layouts/Foo.vue` is all it takes. No extra dependency.
   `DefaultLayout` supplies the app chrome; `EmptyLayout` is deliberately bare. The
-  [/layout](https://vue-starter.0xraz.workers.dev/layout) page is a live demo — switch layouts and
+  [/layout](https://vue-starter.raz.wtf/layout) page is a live demo — switch layouts and
   watch the header appear and disappear, backed by the `useLayout()` composable.
 - **Markdown Vue components** via
   [unplugin-vue-markdown](https://github.com/unplugin/unplugin-vue-markdown) — this README is
@@ -102,7 +102,7 @@ formatting.
 
 ## The data layer
 
-[/demo](https://vue-starter.0xraz.workers.dev/demo) is one resource — a members list — wired
+[/demo](https://vue-starter.raz.wtf/demo) is one resource — a members list — wired
 through every data library in the stack, rather than three disconnected toys:
 
 ```
@@ -289,7 +289,7 @@ pnpm release       # cut it
    `fix:`/`perf:`/`refactor:`/`docs:`/`build:` the patch, a `!` or `BREAKING CHANGE:` the major —
    and writes it to `package.json`;
 3. prepends the new section to `CHANGELOG.md`, which the
-   [/changelog](https://vue-starter.0xraz.workers.dev/changelog) page renders as-is;
+   [/changelog](https://vue-starter.raz.wtf/changelog) page renders as-is;
 4. commits `chore(release): vX.Y.Z`, creates an annotated `vX.Y.Z` tag, and pushes both
    (`git push --follow-tags`);
 5. creates the matching GitHub release.
@@ -322,7 +322,7 @@ Two conventions worth keeping, since the changelog is only as good as the commit
 ## Deployment
 
 Deployed to **Cloudflare Workers** as static assets, at
-[vue-starter.0xraz.workers.dev](https://vue-starter.0xraz.workers.dev).
+[vue-starter.raz.wtf](https://vue-starter.raz.wtf).
 
 `wrangler.jsonc` is an assets-only Worker: no `main`, so no Worker code runs and Cloudflare serves
 `dist/` from its edge. Two details carry weight:
@@ -334,6 +334,16 @@ Deployed to **Cloudflare Workers** as static assets, at
 - **Worker, not Pages.** Pages is in maintenance mode and cannot grow server-side code. Adding a
   `"main"` entry to `wrangler.jsonc` turns this into a full Worker with the same assets in front of
   it, so an API route later is a config change rather than a migration.
+- **It is free.** [Requests to static assets are free and unlimited](https://developers.cloudflare.com/workers/platform/pricing/)
+  on both plans, and an assets-only Worker serves nothing else — so the free plan's 100,000
+  requests/day applies to Worker invocations you do not have. Free-plan asset limits are 20,000 files
+  per version and 25 MiB per file; this build ships 13 files. Cost-identical to Pages.
+
+The site answers on a **Custom Domain** (`routes` with `custom_domain: true`), which means Cloudflare
+creates the DNS record and manages the certificate — there is nothing to add by hand, but the zone
+must be in the same account as the Worker. `workers_dev` is off since the real domain covers it, and
+`preview_urls` is then set back to `true` explicitly: since wrangler 4.44 preview URLs default to
+matching `workers_dev`, so disabling the workers.dev route would otherwise take `cf:preview` with it.
 
 CI deploys on every push to `main`, from the `deploy` job in `.github/workflows/ci.yml`. It is gated
 behind `needs: ci`, so only a commit that passed lint, types, unit tests and e2e ever ships. Two
@@ -347,6 +357,11 @@ repository secrets are required:
 They are secrets rather than values in the workflow on purpose: this is a template, and a fork
 should not inherit someone else's account ID. With no token set the deploy job logs a notice and
 exits green, so forks do not get a red `main`.
+
+The token needs zone access, not just account access — attaching a Custom Domain writes a DNS record.
+The **Edit Cloudflare Workers** template covers it (`Workers Scripts:Edit`, `Workers Routes:Edit`,
+`Zone:Read`, `DNS:Edit`). A token hand-scoped to account permissions only will deploy the Worker and
+then fail on the route.
 
 To deploy by hand:
 
