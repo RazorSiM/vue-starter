@@ -1,6 +1,15 @@
 <script lang="ts" setup>
 import { useCounterStore } from '@/stores/counter'
+
 import ReadME from '../../README.md'
+
+definePage({
+  meta: {
+    layout: 'DefaultLayout',
+    title: 'Home',
+    description: 'Vue Starter Template by Simone Colabufalo - github.com/RazorSiM',
+  },
+})
 
 const counterStore = useCounterStore()
 const counterColor = computed(() => (counterStore.count > 0 ? 'text-indigo-400' : 'text-pink-300'))
@@ -17,11 +26,9 @@ useHead({
 </script>
 
 <template>
-  <div class="___ mx-auto prose">
+  <div class="prose max-w-none dark:prose-invert">
     <ReadME />
-    <h3 class="mb-5">
-      Example of how you can use Pinia as your store manager:
-    </h3>
+    <h3 class="mb-5">Example of how you can use Pinia as your store manager:</h3>
     <div class="mb-2">
       Counter value is
       <span class="font-bold" :class="counterColor">{{ counterStore.count }}</span>
@@ -30,9 +37,7 @@ useHead({
       <UiButton color="warning" @click="counterStore.decreaseCounter()">
         Decrease Counter by 1
       </UiButton>
-      <UiButton @click="counterStore.incrementCounter()">
-        Increase Counter by 1
-      </UiButton>
+      <UiButton @click="counterStore.incrementCounter()"> Increase Counter by 1 </UiButton>
     </div>
   </div>
 </template>
