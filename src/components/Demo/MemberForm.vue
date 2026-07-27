@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useForm } from '@tanstack/vue-form'
 
-import type { NewMember } from '@/schemas/member'
+import type { NewMember, Role } from '@/schemas/member'
 import { newMemberSchema, roleSchema } from '@/schemas/member'
 
 const { pending = false } = defineProps<{ pending?: boolean }>()
@@ -81,27 +81,39 @@ const roles = roleSchema.options
       </form.Field>
     </div>
 
+    <!-- One of three, so it is a radio group — not three toggle buttons with
+         aria-pressed, which is what this was and which tells a screen reader "three
+         independent switches". RadioGroupRoot gives it role="radiogroup", a single tab
+         stop with arrow keys between the options, and Space to select. None of that is
+         extra markup here: it is the behaviour the role already promises. -->
     <form.Field name="role">
       <template #default="{ field }">
         <div class="space-y-1.5">
-          <span class="block text-xs text-gray-500 font-medium font-mono">role</span>
-          <div class="flex flex-wrap gap-2">
-            <button
+          <!-- A radiogroup is named by aria-labelledby, not by `<label for>` — `for`
+               only binds to form controls, and the group itself is a div. -->
+          <span
+            :id="`${field.name}-label`"
+            class="block text-xs text-gray-500 font-medium font-mono"
+          >
+            role
+          </span>
+          <RadioGroupRoot
+            :model-value="field.state.value"
+            :name="field.name"
+            :aria-labelledby="`${field.name}-label`"
+            orientation="horizontal"
+            class="flex flex-wrap gap-2"
+            @update:model-value="field.handleChange($event as Role)"
+          >
+            <RadioGroupItem
               v-for="role in roles"
               :key="role"
-              type="button"
-              class="rounded-lg border px-3 py-1.5 text-sm font-mono transition focus-visible:(outline-2 outline-indigo-500 outline-offset-2)"
-              :class="
-                field.state.value === role
-                  ? 'border-indigo-500 bg-indigo-500/10 text-indigo-700 dark:text-indigo-300'
-                  : 'border-gray-200 text-gray-600 hover:border-gray-300 dark:(border-gray-800 text-gray-400 hover:border-gray-700)'
-              "
-              :aria-pressed="field.state.value === role"
-              @click="field.handleChange(role)"
+              :value="role"
+              class="rounded-lg border px-3 py-1.5 text-sm font-mono transition focus-visible:(outline-2 outline-indigo-500 outline-offset-2) data-[state=checked]:(border-indigo-500 bg-indigo-500/10 text-indigo-700 dark:text-indigo-300) data-[state=unchecked]:(border-gray-200 text-gray-600 hover:border-gray-300 dark:(border-gray-800 text-gray-400 hover:border-gray-700))"
             >
               {{ role }}
-            </button>
-          </div>
+            </RadioGroupItem>
+          </RadioGroupRoot>
         </div>
       </template>
     </form.Field>

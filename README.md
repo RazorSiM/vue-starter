@@ -11,8 +11,8 @@ pnpm install
 ## What's Included
 
 A modern Vue 3 stack wired together and verified end to end: Vite 8, file-based routing,
-UnoCSS with the Tailwind-v4-aligned engine, and the Rust-based oxc toolchain for linting and
-formatting.
+UnoCSS with the Tailwind-v4-aligned engine, accessible interaction primitives from Reka UI, and the
+Rust-based oxc toolchain for linting and formatting.
 
 ### Features
 
@@ -53,6 +53,41 @@ formatting.
   own: no server, no cache, nothing to invalidate. The `/demo` page puts the two side by side.
 - **[VueUse 14](https://vueuse.org)** — essential composition utilities.
 - **[Unhead 3](https://unhead.unjs.io)** — SEO and page metadata.
+- **[Reka UI 2](https://reka-ui.com)** — unstyled, accessible component primitives. It ships the
+  behaviour that is tedious to write and easy to get subtly wrong — roving focus, focus trapping and
+  restoration, ARIA wiring, Escape handling — and ships no CSS at all, so UnoCSS still owns every
+  pixel. It is used in four places, each one replacing markup that was actively misleading to a
+  screen reader:
+
+  | primitive     | where                                                                            | what it replaced                                                                      |
+  | ------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+  | `RadioGroup`  | the role field in `Demo/MemberForm.vue`, the layout picker in `pages/layout.vue` | `aria-pressed` toggle buttons — a one-of-N choice announced as N independent switches |
+  | `AlertDialog` | the row remove confirmation in `Demo/MemberTable.vue`                            | an immediate, unconfirmed delete                                                      |
+  | `Tooltip`     | the `src/pages/…` hint in `TopNav.vue`                                           | a `title` attribute, which never opens on keyboard focus                              |
+  | `Primitive`   | `Ui/Button`                                                                      | a `tag` prop that was declared and then ignored                                       |
+
+  Three things follow from using it:
+
+  - **Parts auto-import** via `RekaResolver()` in `vite.config.ts`, so an alert dialog costs eight
+    tags and zero import lines. Unused primitives are still tree-shaken.
+  - **Style with `data-[state=…]`**, not with a bound class expression. The primitive already tracks
+    checked/open/closed and exposes it as an attribute, so
+    `data-[state=checked]:border-indigo-500` replaces a ternary over your own state.
+  - **It does not replace native elements that were already correct.** The name and email fields are
+    still `<input>` with `<label for>`, and "simulate a 500" is still a real checkbox. Reaching for a
+    primitive where the platform already gives you the semantics buys nothing but JavaScript.
+
+  **It costs ~47 KB gzipped across all chunks, ~37 KB of it on first paint.** The tooltip is the
+  expensive part: it lives in the header, so every page pulls in the popper and focus-management
+  code that `AlertDialog` also shares. If that trade is wrong for your app, deleting the
+  `TooltipRoot` wrapper in `src/components/TopNav.vue` is the single biggest saving, and an
+  `aria-describedby` pointing at a `sr-only` span keeps the screen-reader behaviour for no
+  JavaScript — you just lose the hint for sighted mouse users. The `RadioGroup` and `AlertDialog`
+  conversions are close to free by comparison (~5 KB of route chunk each).
+
+  Reka UI is deliberately unstyled. If you want a styled layer on top of exactly these primitives,
+  [shadcn-vue](https://www.shadcn-vue.com) is Reka UI plus a component library.
+
 - **[UnoCSS 66](https://unocss.dev)** — instant atomic CSS.
   - **[@unocss/preset-wind4](https://unocss.dev/presets/wind4)**: the Tailwind-v4-aligned engine
     (oklch colours, CSS-variable theme). Its reset is built in via `preflights.reset`, so no
@@ -94,7 +129,9 @@ formatting.
   Playwright browsers. Entirely optional; see [Requirements](#requirements).
 - **Auto-imports** — [unplugin-auto-import](https://github.com/unplugin/unplugin-auto-import) for
   composables and [unplugin-vue-components](https://github.com/unplugin/unplugin-vue-components)
-  for components.
+  for components, the latter with Reka UI's resolver registered so its primitives resolve by name
+  too. Both write their declarations to the repo root (`auto-imports.d.ts`, `components.d.ts`) and
+  both files are committed, so a fresh clone type-checks before anything has been run.
 - **[unplugin-turbo-console](https://github.com/unplugin/unplugin-turbo-console)** and
   **[vite-plugin-vue-devtools](https://github.com/vuejs/devtools-next)** for debugging.
 - **VS Code integration** — format-on-save and `source.fixAll.oxc` via the `oxc.oxc-vscode`

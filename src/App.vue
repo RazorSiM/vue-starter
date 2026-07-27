@@ -27,7 +27,12 @@ useSeoMeta({
 </script>
 
 <template>
-  <component :is="layout">
-    <RouterView />
-  </component>
+  <!-- TooltipProvider is renderless — it adds no element, only the shared open/delay
+       state that lets moving between two triggers skip the reopen delay. Reka UI
+       requires it above any TooltipRoot, so it belongs here rather than per-component. -->
+  <TooltipProvider :delay-duration="200">
+    <component :is="layout">
+      <RouterView />
+    </component>
+  </TooltipProvider>
 </template>

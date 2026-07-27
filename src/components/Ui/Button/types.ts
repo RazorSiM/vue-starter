@@ -1,6 +1,11 @@
 // @unocss-include
-export interface ButtonProps {
-  tag?: string
+import type { PrimitiveProps } from 'reka-ui'
+
+// `as` and `asChild` come from Reka UI's Primitive. `as` swaps the element (a link that
+// looks like a button); `asChild` renders the child instead and merges props onto it,
+// which is how this button becomes the trigger of a Reka primitive — see
+// `<AlertDialogAction as-child>` in Demo/MemberTable.vue.
+export interface ButtonProps extends PrimitiveProps {
   color?: Color
   size?: Size
 }

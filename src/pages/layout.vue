@@ -37,25 +37,32 @@ const { active, declared, override, setLayout, layouts } = useLayout()
 
     <section class="space-y-4">
       <div class="flex flex-wrap items-baseline justify-between gap-2">
-        <h2 class="text-sm text-gray-500 font-medium font-mono tracking-wide uppercase">Try it</h2>
+        <h2
+          id="layout-picker-label"
+          class="text-sm text-gray-500 font-medium font-mono tracking-wide uppercase"
+        >
+          Try it
+        </h2>
         <p class="text-xs text-gray-500 font-mono">
           rendering in <span class="text-indigo-600 dark:text-indigo-400">{{ active }}</span>
         </p>
       </div>
 
-      <div class="grid gap-4 sm:grid-cols-2">
-        <button
+      <!-- Picking one of two layouts is a radio group, so it says so: role="radiogroup",
+           arrow keys between the cards, one tab stop for the pair. The cards were
+           aria-pressed toggle buttons, which announces two independent on/off switches
+           and leaves the mutual exclusivity purely visual. -->
+      <RadioGroupRoot
+        :model-value="active"
+        aria-labelledby="layout-picker-label"
+        class="grid gap-4 sm:grid-cols-2"
+        @update:model-value="setLayout($event as LayoutName)"
+      >
+        <RadioGroupItem
           v-for="option in layouts"
           :key="option.name"
-          type="button"
-          class="group rounded-xl border p-4 text-left transition focus-visible:(outline-2 outline-indigo-500 outline-offset-2)"
-          :class="
-            active === option.name
-              ? 'border-indigo-500 bg-indigo-500/5 dark:border-indigo-400'
-              : 'border-gray-200 hover:border-gray-300 dark:(border-gray-800 hover:border-gray-700)'
-          "
-          :aria-pressed="active === option.name"
-          @click="setLayout(option.name)"
+          :value="option.name"
+          class="group rounded-xl border p-4 text-left transition focus-visible:(outline-2 outline-indigo-500 outline-offset-2) data-[state=checked]:(border-indigo-500 bg-indigo-500/5 dark:border-indigo-400) data-[state=unchecked]:(border-gray-200 hover:border-gray-300 dark:(border-gray-800 hover:border-gray-700))"
         >
           <!-- Miniature of the frame each layout renders. -->
           <div
@@ -73,26 +80,29 @@ const { active, declared, override, setLayout, layouts } = useLayout()
 
           <div class="flex items-center gap-2">
             <span class="text-sm font-mono font-medium">{{ option.name }}</span>
-            <div
-              v-if="active === option.name"
+            <!-- RadioGroupIndicator only renders while its item is checked, so the tick
+                 needs no `active === option.name` of its own. -->
+            <RadioGroupIndicator
               class="i-lucide-check h-3.5 w-3.5 text-indigo-600 dark:text-indigo-400"
               aria-hidden="true"
             />
           </div>
-          <p class="mt-1 text-xs text-gray-500 leading-relaxed dark:text-gray-400">
+          <!-- Spans, not <p>/<ul>: a radio item renders as a <button>, whose content
+               model is phrasing content only. -->
+          <span class="mt-1 block text-xs text-gray-500 leading-relaxed dark:text-gray-400">
             {{ option.summary }}
-          </p>
-          <ul class="mt-2 flex flex-wrap gap-1">
-            <li
+          </span>
+          <span class="mt-2 flex flex-wrap gap-1">
+            <span
               v-for="item in option.provides"
               :key="item"
               class="rounded bg-gray-200/70 px-1.5 py-0.5 text-[11px] text-gray-600 font-mono dark:(bg-gray-800 text-gray-400)"
             >
               {{ item }}
-            </li>
-          </ul>
-        </button>
-      </div>
+            </span>
+          </span>
+        </RadioGroupItem>
+      </RadioGroupRoot>
 
       <p v-if="override" class="flex flex-wrap items-center gap-2 text-xs text-gray-500 font-mono">
         <span
