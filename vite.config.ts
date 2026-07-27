@@ -5,6 +5,7 @@ import Shiki from '@shikijs/markdown-it'
 import { unheadVueComposablesImports } from '@unhead/vue'
 import { Unhead } from '@unhead/vue/vite'
 import vue from '@vitejs/plugin-vue'
+import RekaResolver from 'reka-ui/resolver'
 import UnoCSS from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import TurboConsole from 'unplugin-turbo-console/vite'
@@ -62,6 +63,10 @@ export default defineConfig({
       dts: true,
       collapseSamePrefixes: true,
       directoryAsNamespace: true,
+      // Reka UI ships ~90 unstyled primitives and a single dialog uses eight of them.
+      // The resolver keeps that import list out of every SFC; unused parts are still
+      // tree-shaken, because the resolver emits a named import per part actually used.
+      resolvers: [RekaResolver()],
       types: [
         {
           from: 'vue-router',

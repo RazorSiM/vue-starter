@@ -112,14 +112,49 @@ const sortIndicator = { asc: '↑', desc: '↓' } as const
               <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
             </td>
             <td class="px-3 py-2 text-right">
-              <button
-                type="button"
-                class="rounded px-1.5 py-0.5 text-xs text-gray-500 font-mono transition hover:(bg-red-500/10 text-red-600) focus-visible:(outline-2 outline-indigo-500 outline-offset-2) disabled:opacity-40 dark:hover:text-red-400"
-                :disabled="props.removingId === row.original.id"
-                @click="emit('remove', row.original.id)"
-              >
-                {{ props.removingId === row.original.id ? 'removing…' : 'remove' }}
-              </button>
+              <!-- Removal is destructive and used to happen on a single click. An alert
+                   dialog is the one place hand-written markup almost always gets wrong:
+                   it has to trap Tab inside itself, restore focus to the trigger on
+                   close, respond to Escape, and mark the rest of the page inert. Reka
+                   does all four; the only obligations left are a Title and a
+                   Description, which it wires up as the dialog's accessible name. -->
+              <AlertDialogRoot>
+                <AlertDialogTrigger
+                  type="button"
+                  class="rounded px-1.5 py-0.5 text-xs text-gray-500 font-mono transition hover:(bg-red-500/10 text-red-600) focus-visible:(outline-2 outline-indigo-500 outline-offset-2) disabled:opacity-40 dark:hover:text-red-400"
+                  :disabled="props.removingId === row.original.id"
+                  :aria-label="`Remove ${row.original.name}`"
+                >
+                  {{ props.removingId === row.original.id ? 'removing…' : 'remove' }}
+                </AlertDialogTrigger>
+
+                <AlertDialogPortal>
+                  <AlertDialogOverlay class="fixed inset-0 z-100 bg-gray-950/40 backdrop-blur-sm" />
+                  <AlertDialogContent
+                    class="fixed left-1/2 top-1/2 z-101 max-w-[calc(100vw-2rem)] w-96 translate-x--1/2 translate-y--1/2 border border-gray-200 rounded-xl bg-white p-6 text-left shadow-xl dark:(border-gray-800 bg-gray-950)"
+                  >
+                    <AlertDialogTitle class="text-base font-semibold">
+                      Remove {{ row.original.name }}?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription
+                      class="mt-2 text-sm text-gray-600 leading-relaxed dark:text-gray-400"
+                    >
+                      This deletes the row from the in-memory MSW database for this session. Reload
+                      the page and the seeded data is back.
+                    </AlertDialogDescription>
+                    <div class="mt-5 flex justify-end gap-2">
+                      <AlertDialogCancel as-child>
+                        <UiButton color="secondary" size="sm">Cancel</UiButton>
+                      </AlertDialogCancel>
+                      <AlertDialogAction as-child>
+                        <UiButton color="danger" size="sm" @click="emit('remove', row.original.id)">
+                          Remove
+                        </UiButton>
+                      </AlertDialogAction>
+                    </div>
+                  </AlertDialogContent>
+                </AlertDialogPortal>
+              </AlertDialogRoot>
             </td>
           </tr>
 
