@@ -1,9 +1,11 @@
 {
   "recommendations": [
+    "oxc.oxc-vscode",
     "Vue.volar",
+    "antfu.unocss",
     "vitest.explorer",
     "ms-playwright.playwright",
-    "dbaeumer.vscode-eslint",
     "EditorConfig.EditorConfig"
-  ]
+  ],
+  "unwantedRecommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
 }

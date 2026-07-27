@@ -1,0 +1,102 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["eslint", "typescript", "unicorn", "oxc", "import", "promise", "vue", "node"],
+  "jsPlugins": ["oxlint-plugin-vize"],
+  "settings": {
+    "vize": {
+      "preset": "incremental",
+      "helpLevel": "short"
+    }
+  },
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error",
+    "perf": "warn",
+    "pedantic": "off",
+    "style": "off",
+    "restriction": "off",
+    "nursery": "off"
+  },
+  "env": { "browser": true, "es2026": true },
+  "globals": { "definePage": "readonly" },
+  "options": { "reportUnusedDisableDirectives": "warn" },
+  "ignorePatterns": [
+    "dist",
+    "coverage",
+    "playwright-report",
+    "test-results",
+    "auto-imports.d.ts",
+    "components.d.ts",
+    "src/typed-router.d.ts"
+  ],
+  "rules": {
+    "no-console": "warn",
+    "no-undef": "off",
+    "no-underscore-dangle": "off",
+
+    // Type-aware rule (needs --type-aware + oxlint-tsgolint). Off because
+    // vite.config.ts deliberately uses `md.use(shiki as never)` to bridge
+    // @shikijs/markdown-it's markdown-it types to unplugin-vue-markdown's
+    // markdown-exit instance. Turned off in config rather than via an inline
+    // directive, so plain `oxlint` runs (pre-commit) don't report an unused
+    // disable directive.
+    "typescript/no-unsafe-type-assertion": "off",
+    "import/first": "error",
+    "import/no-duplicates": "error",
+    "import/no-self-import": "error",
+    "import/no-unassigned-import": "off",
+    "vue/no-import-compiler-macros": "error",
+    "vue/prefer-import-from-vue": "error",
+    "vue/require-typed-ref": "error",
+    "vue/no-export-in-script-setup": "error",
+    "vue/valid-define-props": "error",
+    "vue/valid-define-emits": "error",
+    "vue/valid-define-options": "error",
+    "vue/no-side-effects-in-computed-properties": "error",
+    "vue/no-watch-after-await": "error",
+    "vue/no-lifecycle-after-await": "error",
+    "vue/prop-name-casing": "error",
+    "vue/no-reserved-props": "error",
+    "unicorn/require-module-specifiers": "off",
+
+    "vize/vue/require-v-for-key": "error",
+    "vize/vue/valid-v-for": "error",
+    "vize/vue/no-use-v-if-with-v-for": "error",
+    "vize/vue/no-v-html": "error",
+    "vize/vue/no-unused-components": "error",
+    "vize/vue/no-mutating-props": "error",
+    "vize/vue/no-duplicate-attributes": "error",
+    "vize/vue/no-dupe-v-else-if": "error",
+    "vize/vue/valid-v-if": "error",
+    "vize/vue/valid-v-else": "error",
+    "vize/vue/valid-v-model": "error",
+    "vize/vue/valid-v-slot": "error",
+    "vize/vue/valid-template-root": "error",
+    "vize/vue/no-template-target-blank": "error",
+    "vize/a11y/img-alt": "warn",
+    "vize/a11y/anchor-has-content": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.spec.ts", "**/*.test.ts"],
+      "excludeFiles": ["e2e/**"],
+      "plugins": ["eslint", "typescript", "unicorn", "oxc", "vitest"],
+      "rules": {
+        "vitest/no-focused-tests": "error",
+        "vitest/no-disabled-tests": "warn",
+        "vitest/no-identical-title": "error",
+        "vitest/expect-expect": "error",
+        "vitest/valid-expect": "error",
+        "unicorn/consistent-function-scoping": "off"
+      }
+    },
+    {
+      "files": ["*.config.ts", "*.config.js"],
+      "env": { "node": true, "es2026": true },
+      "rules": {
+        "import/no-nodejs-modules": "off",
+        "no-console": "off"
+      }
+    }
+  ]
+}

@@ -1,5 +1,32 @@
 pre-commit:
+  # piped, not parallel: oxlint --fix writes first, then oxfmt formats its output.
+  # Running them in parallel would race on the same files.
+  piped: true
+  jobs:
+    - name: oxlint
+      glob: '*.{js,mjs,cjs,jsx,ts,mts,cts,tsx,vue}'
+      run: pnpm exec oxlint --fix --no-error-on-unmatched-pattern {staged_files}
+      stage_fixed: true
+
+    - name: oxfmt
+      glob: '*.{js,mjs,cjs,jsx,ts,mts,cts,tsx,vue,json,jsonc,json5,css,scss,less,md,yml,yaml,html}'
+      run: pnpm exec oxfmt --no-error-on-unmatched-pattern {staged_files}
+      stage_fixed: true
+
+    # Vue template rules (vize/*). Check-only: the oxlint-vize wrapper cannot
+    # write fixes back yet, so it runs after the fixers rather than with them.
+    # This is also the only job that sees scriptless .vue files — plain oxlint
+    # silently skips them.
+    - name: oxlint-vize
+      glob: '*.vue'
+      run: pnpm exec oxlint-vize --no-error-on-unmatched-pattern {staged_files}
+
+pre-push:
   parallel: true
-  commands:
-    lint:
-      run: pnpm eslint {staged_files}
+  jobs:
+    - name: lint
+      run: pnpm run lint
+    - name: format
+      run: pnpm run format:check
+    - name: type-check
+      run: pnpm run type-check
