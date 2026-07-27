@@ -2,7 +2,7 @@
   <!--
     Deliberately bare: page background and content padding, nothing else.
     No header and no navigation — that absence is the point, and it is what the
-    /about layout switcher demonstrates. Pages using this layout are responsible
+    /layout switcher demonstrates. Pages using this layout are responsible
     for their own way back.
   -->
   <div

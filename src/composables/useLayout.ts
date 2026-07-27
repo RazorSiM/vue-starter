@@ -24,7 +24,7 @@ const override = shallowRef<LayoutName | null>(null)
  * Resolves which layout renders the current page.
  *
  * Normally that is whatever the page declared via `definePage({ meta: { layout } })`.
- * `setLayout()` temporarily overrides it, which is what the /about demo uses to let
+ * `setLayout()` temporarily overrides it, which is what the /layout demo uses to let
  * you watch the chrome appear and disappear.
  */
 export function useLayout() {

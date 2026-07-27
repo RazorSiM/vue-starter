@@ -2,7 +2,7 @@
 definePage({
   meta: {
     layout: 'EmptyLayout',
-    title: 'About',
+    title: 'Layouts',
     description: 'Vue Starter Template by Simone Colabufalo - github.com/RazorSiM',
   },
 })
@@ -15,7 +15,7 @@ const { active, declared, override, setLayout, layouts } = useLayout()
     <header class="space-y-3">
       <div class="flex items-center gap-2 text-xs text-gray-500 font-mono">
         <div class="i-lucide-layout-template h-3.5 w-3.5" aria-hidden="true" />
-        <span>src/pages/about.vue</span>
+        <span>src/pages/layout.vue</span>
       </div>
       <h1 class="text-3xl font-semibold tracking-tight">Layouts</h1>
       <p class="max-w-2xl text-gray-600 leading-relaxed dark:text-gray-400">

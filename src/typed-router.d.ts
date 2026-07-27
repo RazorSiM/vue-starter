@@ -38,13 +38,6 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
-    '/about': RouteRecordInfo<
-      '/about',
-      '/about',
-      Record<never, never>,
-      Record<never, never>,
-      | never
-    >,
     '/changelog': RouteRecordInfo<
       '/changelog',
       '/changelog',
@@ -55,6 +48,13 @@ declare module 'vue-router/auto-routes' {
     '/demo': RouteRecordInfo<
       '/demo',
       '/demo',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
+    '/layout': RouteRecordInfo<
+      '/layout',
+      '/layout',
       Record<never, never>,
       Record<never, never>,
       | never
@@ -80,14 +80,6 @@ declare module 'vue-router/auto-routes' {
       pathParamNames:
         | never
     }
-    'src/pages/about.vue': {
-      routes:
-        | '/about'
-      views:
-        | never
-      pathParamNames:
-        | never
-    }
     'src/pages/changelog.vue': {
       routes:
         | '/changelog'
@@ -99,6 +91,14 @@ declare module 'vue-router/auto-routes' {
     'src/pages/demo.vue': {
       routes:
         | '/demo'
+      views:
+        | never
+      pathParamNames:
+        | never
+    }
+    'src/pages/layout.vue': {
+      routes:
+        | '/layout'
       views:
         | never
       pathParamNames:
