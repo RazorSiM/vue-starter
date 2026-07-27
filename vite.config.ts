@@ -83,5 +83,8 @@ export default defineConfig({
     environment: 'jsdom',
     include: ['src/**/*.spec.ts'],
     root: fileURLToPath(new URL('./', import.meta.url)),
+    // Starts the MSW node server for every suite, so tests exercise the same
+    // handlers the browser worker serves. See src/test/setup.ts.
+    setupFiles: ['src/test/setup.ts'],
   },
 })
