@@ -35,7 +35,22 @@ formatting.
   The route-building plugin now ships inside `vue-router` itself — `unplugin-vue-router` is no
   longer a separate dependency.
 
-- **[Pinia 4](https://pinia.vuejs.org)** — state management.
+- **[TanStack Query 5](https://tanstack.com/query/latest/docs/framework/vue/overview)** — server
+  state: caching, background refetching, loading and error states, and cache invalidation after a
+  mutation. Installed via `VueQueryPlugin` in `src/main.ts` with a 30s default `staleTime`.
+- **[TanStack Form 1](https://tanstack.com/form/latest/docs/framework/vue/quick-start)** — form
+  state and validation, fed directly by a zod schema. zod 4 implements
+  [Standard Schema](https://standardschema.dev), so there is no resolver package in between.
+- **[TanStack Table 8](https://tanstack.com/table/latest/docs/framework/vue/vue-table)** — headless
+  sorting and filtering. You write the markup; it owns the row model.
+- **[zod 4](https://zod.dev)** — one schema per resource in `src/schemas/`, used three ways: it
+  validates the form, parses the API response at the network boundary, and infers the TypeScript
+  types. A field cannot drift between the three.
+- **[MSW 2](https://mswjs.io)** — the API the demo talks to. Handlers live in
+  `src/mocks/handlers.ts` and serve all three environments: the browser (via a service worker), the
+  unit tests (via `setupServer`) and the Playwright run.
+- **[Pinia 4](https://pinia.vuejs.org)** — client state, for the things Query deliberately does not
+  own: no server, no cache, nothing to invalidate. The `/demo` page puts the two side by side.
 - **[VueUse 14](https://vueuse.org)** — essential composition utilities.
 - **[Unhead 3](https://unhead.unjs.io)** — SEO and page metadata.
 - **[UnoCSS 66](https://unocss.dev)** — instant atomic CSS.
@@ -84,6 +99,53 @@ formatting.
   **[vite-plugin-vue-devtools](https://github.com/vuejs/devtools-next)** for debugging.
 - **VS Code integration** — format-on-save and `source.fixAll.oxc` via the `oxc.oxc-vscode`
   extension. The ESLint and Prettier extensions are listed under `unwantedRecommendations`.
+
+## The data layer
+
+[/demo](https://vue-starter-razorsim.vercel.app/demo) is one resource — a members list — wired
+through every data library in the stack, rather than three disconnected toys:
+
+```
+src/schemas/member.ts     zod schemas + inferred types      (the contract)
+src/mocks/handlers.ts     MSW handlers                      (the API)
+src/mocks/db.ts           seeded in-memory data
+src/api/members.ts        fetch + zod parse                 (the boundary)
+src/composables/          useMembers(): query + mutations   (the state)
+src/components/Demo/      form, table, panel                (the UI)
+```
+
+Four things worth knowing:
+
+1. **zod parses at the boundary, it does not cast.** `src/api/members.ts` runs
+   `memberListSchema.parse()` on every response. A backend that renames a field fails loudly in one
+   file, instead of surfacing as `undefined` three components away.
+2. **Mutations invalidate, they do not patch the cache.** `id`, `commits` and `joinedAt` are the
+   server's to assign, so `useMembers()` invalidates the `['members']` key and refetches rather than
+   guessing what the server did.
+3. **The "simulate a 500" toggle is part of the query key**, not just the fetcher. Flipping it is a
+   different resource as far as the cache is concerned, so both results stay cached and toggling
+   back is instant. `retry` is off so the error state is visible immediately — delete that line for
+   the sensible production default.
+4. **Components never see a query key or a `fetch`.** `MemberForm` emits a validated value and
+   knows nothing about the API, which is why it can be unit-tested without a server at all.
+
+### MSW
+
+The mock runs in **every** environment, including the production build — `/demo` has no backend, so
+a dev-only mock would leave the deployed page showing a permanent error. `src/main.ts` awaits
+`worker.start()` before mounting, or the first query would race the worker and get a real 404.
+
+- `public/mockServiceWorker.js` is generated (`pnpm exec msw init public --save`) and **committed**.
+  The `msw.workerDirectory` field in `package.json` plus the `allowBuilds: msw` entry in
+  `pnpm-workspace.yaml` let msw's postinstall refresh it on upgrade; without that it silently drifts
+  out of sync with the installed version.
+- Handler paths are written `*/api/members`, not `/api/members`. A bare relative path resolves
+  against `document.baseURI`, which does not exist under Node — the same handlers have to match in
+  the browser, in vitest and in Playwright.
+- **It costs ~158 KB gzipped**, loaded on first paint because the mount awaits it. That is the price
+  of a demo that works offline and on a static host. To pay it only in development, guard the call
+  in `src/main.ts` with `import.meta.env.DEV`; to remove mocking entirely, delete `startMockApi()`
+  and `src/mocks/`, and point `src/api/members.ts` at a real origin.
 
 ## Linting & formatting
 
@@ -200,6 +262,13 @@ and tests the preview server:
 pnpm build
 CI=1 pnpm test:e2e
 ```
+
+Both layers are backed by the same MSW handlers, from opposite sides. The unit tests start
+`setupServer` in `src/test/setup.ts` with `onUnhandledRequest: 'error'` — a request nobody mocked is
+a bug in the test, not something to quietly let through — and reset the in-memory db between tests,
+since it is module state that would otherwise leak from one test's POST into the next test's GET.
+The Playwright suite drives the real service worker in a real browser, which is what notices when
+`public/mockServiceWorker.js` goes missing or stale.
 
 ## Releases
 
