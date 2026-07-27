@@ -37,3 +37,8 @@ devenv.local.yaml
 
 # direnv
 .direnv
+
+# wrangler's local state, and the secrets file it reads for `wrangler dev`
+.wrangler
+.dev.vars
+.dev.vars.*

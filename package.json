@@ -28,6 +28,8 @@
     "check": "pnpm run lint && pnpm run format:check && pnpm run type-check",
     "changelog": "changelogen",
     "release": "changelogen --release --clean --push",
+    "cf:deploy": "vite build && wrangler deploy",
+    "cf:preview": "vite build && wrangler versions upload",
     "prepare": "lefthook install"
   },
   "dependencies": {
@@ -68,7 +70,8 @@
     "vite": "^8.1.5",
     "vite-plugin-vue-devtools": "^8.2.1",
     "vitest": "^4.1.10",
-    "vue-tsc": "^3.3.8"
+    "vue-tsc": "^3.3.8",
+    "wrangler": "^4.114.0"
   },
   "msw": {
     "workerDirectory": [

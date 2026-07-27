@@ -54,3 +54,55 @@ jobs:
       # which is why the build step must come first.
       - name: E2E tests
         run: pnpm run test:e2e
+
+  # Static assets on a Cloudflare Worker. Gated behind `needs: ci`, so main only ever
+  # deploys a commit that passed lint, types, units and e2e.
+  deploy:
+    needs: ci
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    # Required by wrangler-action to mint the OIDC token it uses for provenance.
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # A fork of this template has no Cloudflare secrets and should not get a red
+      # main because of it. `secrets` is unavailable in a job-level `if`, so the
+      # check has to happen in a step.
+      - name: Are Cloudflare credentials configured?
+        id: credentials
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ -n "$CLOUDFLARE_API_TOKEN" ]; then
+            echo 'ready=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'ready=false' >> "$GITHUB_OUTPUT"
+            echo '::notice::CLOUDFLARE_API_TOKEN is not set — skipping the deploy.'
+          fi
+
+      # Rebuilt rather than carried over from the ci job as an artifact: the build is
+      # under a second, and an artifact round-trip is neither faster nor more honest.
+      - name: Build
+        if: steps.credentials.outputs.ready == 'true'
+        run: pnpm run build-only
+
+      - name: Deploy to Cloudflare Workers
+        if: steps.credentials.outputs.ready == 'true'
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          packageManager: pnpm

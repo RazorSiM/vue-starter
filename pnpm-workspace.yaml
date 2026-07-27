@@ -4,6 +4,10 @@
 # scripts by default, and without this the `prepare: lefthook install` script
 # fails — silently leaving every contributor without git hooks.
 allowBuilds:
+  # wrangler's own toolchain: esbuild fetches its native binary, workerd is the
+  # Workers runtime `wrangler dev` runs locally. Blocked, `wrangler` errors on use.
+  esbuild: true
+
   lefthook: true
 
   # Rewrites public/mockServiceWorker.js whenever msw is upgraded, keyed off the
@@ -14,6 +18,8 @@ allowBuilds:
   # @tanstack/vue-query depends on vue-demi, whose postinstall points the package
   # at the Vue 3 build. Skipping it leaves the Vue 2 entry in place.
   vue-demi: true
+
+  workerd: true
 
 # pnpm 11 withholds packages published very recently (minimumReleaseAge).
 # Icon collections publish constantly, so this one is exempted.

@@ -1,0 +1,19 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "vue-starter",
+  "compatibility_date": "2026-07-27",
+
+  // An assets-only Worker: there is no "main", so no Worker code runs and Cloudflare
+  // serves ./dist straight from its edge cache. Add a "main" entry later if this ever
+  // needs an API route — that is the reason this is a Worker rather than a Pages
+  // project, which cannot grow one.
+  "assets": {
+    "directory": "./dist",
+
+    // vue-router uses history mode, so /demo has no matching file on disk. Without
+    // this, a hard refresh anywhere but / returns Cloudflare's 404 instead of the
+    // app. Real files still win: /mockServiceWorker.js is served as itself, which
+    // MSW requires — a fallback to index.html there would break the demo page.
+    "not_found_handling": "single-page-application",
+  },
+}
