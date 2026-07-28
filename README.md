@@ -1,5 +1,9 @@
 # Vue 3 Starter
 
+[![CI](https://github.com/RazorSiM/vue-starter/actions/workflows/ci.yml/badge.svg)](https://github.com/RazorSiM/vue-starter/actions/workflows/ci.yml)
+[![Deployed on Cloudflare Workers](https://img.shields.io/badge/deployed-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white)](https://vue-starter.raz.wtf)
+[![Docs](https://img.shields.io/badge/docs-%2Fdocs-4FC08D?logo=vuedotjs&logoColor=white)](https://vue-starter.raz.wtf/docs)
+
 A comprehensive Vite + Vue 3 template, [deployed here](https://vue-starter.raz.wtf/).
 Requires **Node 26** and **pnpm 11**.
 
