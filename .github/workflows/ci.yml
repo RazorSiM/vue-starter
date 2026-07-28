@@ -62,6 +62,14 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
+    # Gives the repo a native Deployments panel linking to the live site.
+    # wrangler-action does not create GitHub deployment records on its own.
+    # Caveat: a run where the deploy steps are skipped (a fork with no token)
+    # still records a deployment, since the environment is a job-level property.
+    environment:
+      name: production
+      url: https://vue-starter.raz.wtf
+
     # Required by wrangler-action to mint the OIDC token it uses for provenance.
     permissions:
       contents: read
