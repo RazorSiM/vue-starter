@@ -11,6 +11,7 @@
 // to the link with aria-describedby, and opens on focus as well as hover.
 const links = [
   { to: '/', label: 'readme', file: 'index.vue', icon: 'i-lucide-house' },
+  { to: '/docs', label: 'docs', file: 'docs.vue', icon: 'i-lucide-book-open' },
   { to: '/demo', label: 'demo', file: 'demo.vue', icon: 'i-lucide-flask-conical' },
   { to: '/layout', label: 'layout', file: 'layout.vue', icon: 'i-lucide-layout-template' },
   { to: '/changelog', label: 'changelog', file: 'changelog.vue', icon: 'i-lucide-rotate-ccw' },
