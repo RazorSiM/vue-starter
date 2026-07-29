@@ -23,19 +23,25 @@ const sourceFile = computed(() => {
     <header
       class="sticky top-0 z-50 border-b border-gray-200 bg-gray-50/85 backdrop-blur dark:(border-gray-800 bg-gray-950/85)"
     >
-      <div class="mx-auto max-w-3xl flex items-center gap-4 px-6 py-3">
+      <div class="mx-auto max-w-5xl flex items-center gap-3 px-6 py-3 sm:gap-4">
         <div class="min-w-0 flex items-center gap-3">
-          <span class="text-sm font-mono font-semibold tracking-tight">vue-starter</span>
+          <!-- shrink-0, or flex resolves the overflow by wrapping the wordmark to
+               "vue-" / "starter" instead of truncating the path chip built for it. -->
+          <span class="shrink-0 text-sm font-mono font-semibold tracking-tight">vue-starter</span>
+          <!-- min-w-0 has to be on this span too: `truncate` only shrinks when every
+               flex ancestor between it and the overflow allows it, and the outer div
+               having min-w-0 is not enough. The chip is the one element here that is
+               meant to give way, so it is also the only shrinkable one. -->
           <span
-            class="hidden items-center gap-1.5 text-xs text-gray-500 font-mono sm:inline-flex dark:text-gray-500"
+            class="hidden min-w-0 items-center gap-1.5 text-xs text-gray-500 font-mono lg:inline-flex dark:text-gray-500"
           >
             <span class="truncate">{{ sourceFile }}</span>
             <div class="i-lucide-arrow-right h-3 w-3 shrink-0" aria-hidden="true" />
-            <span class="text-indigo-600 dark:text-indigo-400">{{ route.path }}</span>
+            <span class="shrink-0 text-indigo-600 dark:text-indigo-400">{{ route.path }}</span>
           </span>
         </div>
 
-        <div class="ml-auto flex items-center gap-1">
+        <div class="ml-auto flex shrink-0 items-center gap-1">
           <TopNav />
           <button
             type="button"
