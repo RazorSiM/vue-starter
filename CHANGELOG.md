@@ -1,5 +1,22 @@
 # @razorsim/vue-starter
 
+## v4.0.1
+
+[compare changes](https://github.com/razorsim/vue-starter/compare/v4.0.0...v4.0.1)
+
+### 📖 Documentation
+
+- Split the README, add AGENTS.md and a /docs page ([#162](https://github.com/razorsim/vue-starter/pull/162))
+- Surface the deployment and docs links ([#163](https://github.com/razorsim/vue-starter/pull/163))
+
+### 🤖 CI
+
+- Pull request preview deployments, and deploy path hardening ([#164](https://github.com/razorsim/vue-starter/pull/164))
+
+### ❤️ Contributors
+
+- Simone Colabufalo ([@RazorSiM](https://github.com/RazorSiM))
+
 ## v4.0.0
 
 [compare changes](https://github.com/razorsim/vue-starter/compare/v3.1.0...v4.0.0)
