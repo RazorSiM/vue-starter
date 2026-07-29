@@ -5,6 +5,21 @@ on:
     branches: [main]
   pull_request:
 
+# Checking out is all most of this needs; `preview` asks for more where it needs it.
+# Set at the top so a job added later starts from read-only rather than from whatever
+# the repository default happens to be. Note that wrangler-action authenticates with
+# the API token, not with GitHub OIDC — nothing here needs `id-token`.
+permissions:
+  contents: read
+
+# One run at a time per branch. On a pull request a superseded run is cancelled,
+# which just saves minutes. On `main` it is queued instead: two pushes in quick
+# succession would otherwise race two `wrangler deploy`s, and the winner would be
+# whichever finished last rather than whichever commit is newer.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   ci:
     runs-on: ubuntu-latest
@@ -45,10 +60,33 @@ jobs:
       - name: Generated files are up to date
         run: git diff --exit-code -- auto-imports.d.ts components.d.ts src/typed-router.d.ts
 
-      # No PLAYWRIGHT_BROWSERS_PATH here (that is the NixOS dev-shell path),
-      # so Playwright downloads its own browsers normally.
+      # The cache key has to be the browser revision, not the lockfile hash: the
+      # revisions ship with @playwright/test, so anything coarser either misses on
+      # every unrelated dependency bump or hits after a Playwright bump and runs the
+      # new client against the old binaries.
+      - name: Resolve the pinned Playwright version
+        id: playwright
+        run: echo "version=$(pnpm exec playwright --version | cut -d' ' -f2)" >> "$GITHUB_OUTPUT"
+
+      # ~400 MB for chromium + firefox + webkit, downloaded on every run before this.
+      # No PLAYWRIGHT_BROWSERS_PATH is set here (that is the NixOS dev-shell path), so
+      # Playwright uses its own default location, which is what gets cached.
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}
+
       - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: pnpm exec playwright install --with-deps
+
+      # The cache holds the browsers but not the apt packages they link against,
+      # so a cache hit still needs the system libraries — just not the download.
+      - name: Install Playwright system dependencies
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: pnpm exec playwright install-deps
 
       # CI=1 is set by Actions, so this tests `vite preview` on :4173 —
       # which is why the build step must come first.
@@ -56,7 +94,9 @@ jobs:
         run: pnpm run test:e2e
 
   # Static assets on a Cloudflare Worker. Gated behind `needs: ci`, so main only ever
-  # deploys a commit that passed lint, types, units and e2e.
+  # deploys a commit that passed lint, types, units and e2e. That gate is the reason
+  # this repo does not use Cloudflare's own git integration (Workers Builds): it
+  # triggers on push, in parallel with this workflow, with no way to wait for a check.
   deploy:
     needs: ci
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -69,10 +109,6 @@ jobs:
     environment:
       name: production
       url: https://vue-starter.raz.wtf
-
-    # Required by wrangler-action to mint the OIDC token it uses for provenance.
-    permissions:
-      contents: read
 
     steps:
       - uses: actions/checkout@v7
@@ -114,3 +150,81 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           packageManager: pnpm
+
+  # `wrangler versions upload` puts the branch on its own
+  # <version>-vue-starter.0xraz.workers.dev URL without promoting it, so production
+  # keeps serving whatever `deploy` last shipped. This is what `preview_urls: true`
+  # in wrangler.jsonc is for.
+  preview:
+    needs: ci
+
+    # Only for pull requests opened from a branch of this repository. A fork's PR runs
+    # with no access to secrets, so the upload could not authenticate anyway — and
+    # `pull_request_target`, which would grant it, means running fork code with a
+    # writable token. Not worth a preview URL.
+    if: >-
+      github.event_name == 'pull_request'
+      && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+
+    # To post the preview URL back onto the pull request.
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # Same reasoning as in `deploy`: a fork should not get a red PR over a secret
+      # it was never going to have.
+      - name: Are Cloudflare credentials configured?
+        id: credentials
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ -n "$CLOUDFLARE_API_TOKEN" ]; then
+            echo 'ready=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'ready=false' >> "$GITHUB_OUTPUT"
+            echo '::notice::CLOUDFLARE_API_TOKEN is not set — skipping the preview.'
+          fi
+
+      - name: Build
+        if: steps.credentials.outputs.ready == 'true'
+        run: pnpm run build-only
+
+      # wrangler writes a machine-readable artifact per command, and the action reads
+      # `preview_url` out of it into `deployment-url` — so no parsing the log.
+      - name: Upload a preview version
+        id: upload
+        if: steps.credentials.outputs.ready == 'true'
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          packageManager: pnpm
+          command: versions upload
+
+      # `--edit-last --create-if-none` rewrites this workflow's own previous comment
+      # instead of appending one per push, so a long-lived PR gets one comment that
+      # always points at the current head.
+      - name: Comment the preview URL on the pull request
+        if: steps.credentials.outputs.ready == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+          PREVIEW_URL: ${{ steps.upload.outputs.deployment-url }}
+          SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          body=$(printf '**Preview:** %s\n\nUploaded from `%s`. This is an unpromoted Worker version, so [production](https://vue-starter.raz.wtf) is untouched.' \
+            "$PREVIEW_URL" "$SHA")
+          gh pr comment "$PR" --edit-last --create-if-none --body "$body"

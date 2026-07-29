@@ -145,8 +145,9 @@ Deployed to **Cloudflare Workers** as static assets, at
 [free and unlimited](https://developers.cloudflare.com/workers/platform/pricing/) on both plans.
 
 CI deploys on every push to `main`, gated behind the `ci` job, so only a commit that passed lint,
-types, unit tests and e2e ever ships. A fork without Cloudflare secrets logs a notice and exits
-green rather than turning `main` red.
+types, unit tests and e2e ever ships. Pull requests from a branch of this repository get a preview
+version uploaded to its own URL, commented onto the PR, with production left alone. A fork without
+Cloudflare secrets logs a notice and exits green rather than turning `main` red.
 
 ```sh
 pnpm run cf:deploy    # build + wrangler deploy

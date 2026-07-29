@@ -397,6 +397,48 @@ The **Edit Cloudflare Workers** template covers it (`Workers Scripts:Edit`, `Wor
 `Zone:Read`, `DNS:Edit`). A token hand-scoped to account permissions only will deploy the Worker and
 then fail on the route.
 
+The workflow sets a `concurrency` group per branch. On a pull request a superseded run is cancelled,
+which only saves minutes; on `main` runs queue instead, because two pushes in quick succession would
+otherwise race two `wrangler deploy`s and the winner would be whichever finished last rather than
+whichever commit is newer.
+
+### Preview deployments
+
+A pull request opened from a branch of this repository gets a preview version, from the `preview` job.
+It runs `wrangler versions upload` — which uploads a version without promoting it, so production
+keeps serving whatever `deploy` last shipped — and comments the resulting
+`<version>-vue-starter.0xraz.workers.dev` URL onto the PR. This is what `preview_urls: true` in
+`wrangler.jsonc` is for. The comment is rewritten in place on each push rather than appended, so a
+long-lived PR has one comment that always points at the current head.
+
+It is skipped for pull requests from forks. Those run with no access to secrets, so the upload could
+not authenticate anyway, and `pull_request_target` — which would grant it — means running fork code
+with a writable token.
+
+### Why not Cloudflare's git integration?
+
+Cloudflare can build and deploy a Worker itself, by connecting the repository to it:
+[Workers Builds](https://developers.cloudflare.com/workers/ci-cd/builds/), the successor to the Pages
+git integration. It is tempting — it would remove both secrets above, since Cloudflare mints its own
+token, and it posts preview URLs and GitHub check runs for free. This repo deliberately does not use
+it, for two reasons:
+
+- **It cannot wait for a check.** A build triggers on push and runs in parallel with this workflow,
+  with no "wait for status checks" setting, so a commit that fails e2e still reaches production. The
+  `needs: ci` gate has no equivalent there. Moving the whole gate into the build command is not a
+  real substitute either: e2e needs `playwright install --with-deps`, which wants `apt` inside the
+  build container.
+- **The toolchain pins would leave the repo.** The
+  [build image](https://developers.cloudflare.com/workers/ci-cd/builds/build-image/) defaults to Node
+  22 and pnpm 10. `.nvmrc` is honoured, so Node 26 is picked up, but `engines.pnpm` here is `>=11`,
+  which pnpm enforces as a hard install failure — so pnpm would have to be pinned with a
+  `PNPM_VERSION` build variable in the Cloudflare dashboard, along with the build and deploy
+  commands. For a template whose point is that you can read how it works from the files, moving
+  deployment config into dashboard state is a bad trade.
+
+The one thing genuinely worth having from it, a preview URL per pull request, is in the `preview` job
+instead.
+
 To deploy by hand:
 
 ```sh
