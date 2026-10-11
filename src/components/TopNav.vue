@@ -9,6 +9,12 @@
 // attach text to a control: it never opens on keyboard focus, never on touch, and
 // screen readers treat it inconsistently. Reka's Tooltip renders real text, wires it
 // to the link with aria-describedby, and opens on focus as well as hover.
+//
+// Below `sm` the labels collapse and only the icons remain: five labelled links need
+// 462px, which does not fit a 375px phone alongside the wordmark and the theme
+// toggle. The label stays in the DOM as `sr-only` rather than being dropped, because
+// the tooltip cannot be the accessible name here — it is wired with
+// aria-describedby, and it never opens on touch at all.
 const links = [
   { to: '/', label: 'readme', file: 'index.vue', icon: 'i-lucide-house' },
   { to: '/docs', label: 'docs', file: 'docs.vue', icon: 'i-lucide-book-open' },
@@ -27,11 +33,11 @@ const links = [
       <TooltipTrigger as-child>
         <RouterLink
           :to="link.to"
-          class="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm text-gray-500 font-mono transition hover:(bg-gray-200/70 text-gray-900) focus-visible:(outline-2 outline-indigo-500 outline-offset-2) dark:text-gray-400 dark:hover:(bg-gray-800 text-gray-100)"
+          class="inline-flex items-center gap-1.5 rounded-md px-2 py-1.5 text-sm text-gray-500 font-mono transition sm:px-2.5 hover:(bg-gray-200/70 text-gray-900) focus-visible:(outline-2 outline-indigo-500 outline-offset-2) dark:text-gray-400 dark:hover:(bg-gray-800 text-gray-100)"
           exact-active-class="bg-indigo-500/10 !text-indigo-600 dark:!text-indigo-300"
         >
-          <div :class="link.icon" class="h-4 w-4" aria-hidden="true" />
-          <span>{{ link.label }}</span>
+          <div :class="link.icon" class="h-4 w-4 shrink-0" aria-hidden="true" />
+          <span class="sr-only sm:not-sr-only">{{ link.label }}</span>
         </RouterLink>
       </TooltipTrigger>
 
