@@ -1,5 +1,21 @@
 # @razorsim/vue-starter
 
+## v4.0.2
+
+[compare changes](https://github.com/razorsim/vue-starter/compare/v4.0.1...v4.0.2)
+
+### 🩹 Fixes
+
+- Make the header fit narrow viewports ([#166](https://github.com/razorsim/vue-starter/pull/166))
+
+### 🏡 Chore
+
+- **deps-dev:** Bump vitest from 4.1.10 to 4.1.11 ([#167](https://github.com/razorsim/vue-starter/pull/167))
+
+### ❤️ Contributors
+
+- Raz ([@RazorSiM](https://github.com/RazorSiM))
+
 ## v4.0.1
 
 [compare changes](https://github.com/razorsim/vue-starter/compare/v4.0.0...v4.0.1)
